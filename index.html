@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
+<meta name="viewport"
+content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apukortti</title>
 
   <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: 'Nunito', system-ui, sans-serif;
-      color: white;
-      background: linear-gradient(135deg, #17364a, #3f7b87, #6da9a4);
-      background-size: 300% 300%;
-      animation: calmBackground 18s ease-in-out infinite alternate;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      letter-spacing: -0.02em;
-    }
+body {
+
+  min-height: 100dvh;
+
+  padding:
+    env(safe-area-inset-top)
+    0
+    env(safe-area-inset-bottom)
+    0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #17364a,
+      #3f7b87,
+      #6da9a4
+    );
+
+  background-size: 300% 300%;
+
+  animation:
+    calmBackground 18s ease-in-out infinite alternate;
+}
 
     .ambient {
       position: fixed;
@@ -212,6 +223,16 @@ body::after {
       rgba(0,0,0,0.22) 100%
     );
   z-index: 1;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  min-height: 100%;
+
+  background: #17364a;
 }
   </style>
 </head>
