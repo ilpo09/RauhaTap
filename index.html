@@ -265,6 +265,9 @@
     const ambientElements = document.querySelectorAll(".ambient");
 
     button.addEventListener("click", () => {
+if ("vibrate" in navigator) {
+  navigator.vibrate(20);
+}
       message.classList.remove("fadeIn");
       message.classList.add("fadeOut");
 
