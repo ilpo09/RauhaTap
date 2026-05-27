@@ -47,7 +47,7 @@
       position: fixed;
       border-radius: 999px;
       filter: blur(90px);
-      opacity: 0.22;
+      opacity: var(--ambient-opacity, 0.22);
       pointer-events: none;
       mix-blend-mode: screen;
       z-index: 0;
@@ -58,6 +58,8 @@
       width: 420px;
       height: 420px;
       background: #8fd3ff;
+      --ambient-opacity: 0.22;
+      --pulse-peak-opacity: 0.28;
       top: -120px;
       left: -100px;
       animation: floatOne 26s ease-in-out infinite alternate;
@@ -67,6 +69,8 @@
       width: 380px;
       height: 380px;
       background: #9effd6;
+      --ambient-opacity: 0.22;
+      --pulse-peak-opacity: 0.27;
       bottom: -140px;
       right: -120px;
       animation: floatTwo 32s ease-in-out infinite alternate;
@@ -78,7 +82,8 @@
       background: #ffffff;
       top: 40%;
       left: 50%;
-      opacity: 0.08;
+      --ambient-opacity: 0.08;
+      --pulse-peak-opacity: 0.12;
       animation: pulseGlow 18s ease-in-out infinite;
     }
 
@@ -248,17 +253,17 @@ body.pulse .ambient3 {
 
 @keyframes auroraPulse {
   0% {
-    opacity: 0.22;
+    opacity: var(--ambient-opacity, 0.22);
     filter: blur(90px);
   }
 
   45% {
-    opacity: 0.38;
-    filter: blur(75px);
+    opacity: var(--pulse-peak-opacity, 0.28);
+    filter: blur(96px);
   }
 
   100% {
-    opacity: 0.22;
+    opacity: var(--ambient-opacity, 0.22);
     filter: blur(90px);
   }
 }
