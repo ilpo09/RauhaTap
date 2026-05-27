@@ -1,0 +1,9 @@
+{
+  "name": "Apukortti",
+  "short_name": "Apukortti",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#23495f",
+  "theme_color": "#23495f",
+  "icons": []
+}

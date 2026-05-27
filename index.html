@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apukortti</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Nunito', system-ui, sans-serif;
+      color: white;
+      background: linear-gradient(135deg, #17364a, #3f7b87, #6da9a4);
+      background-size: 300% 300%;
+      animation: calmBackground 18s ease-in-out infinite alternate;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      letter-spacing: -0.02em;
+    }
+
+    .ambient {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(90px);
+      opacity: 0.22;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .ambient1 {
+      width: 420px;
+      height: 420px;
+      background: #8fd3ff;
+      top: -120px;
+      left: -100px;
+      animation: floatOne 26s ease-in-out infinite alternate;
+    }
+
+    .ambient2 {
+      width: 380px;
+      height: 380px;
+      background: #9effd6;
+      bottom: -140px;
+      right: -120px;
+      animation: floatTwo 32s ease-in-out infinite alternate;
+    }
+
+    .ambient3 {
+      width: 300px;
+      height: 300px;
+      background: #ffffff;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.08;
+      animation: pulseGlow 18s ease-in-out infinite;
+    }
+
+    .app {
+  width: min(90vw, 480px);
+  text-align: center;
+  z-index: 2;
+
+  min-height: 100dvh;
+  padding:
+    max(24px, env(safe-area-inset-top))
+    24px
+    max(24px, env(safe-area-inset-bottom));
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+    .card {
+color: white;
+      min-height: 230px;
+      padding: 42px;
+      border-radius: 38px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.22),
+        inset 0 1px 1px rgba(255,255,255,0.12);
+      animation:
+        breathe 12s ease-in-out infinite,
+        floatCard 18s ease-in-out infinite alternate;
+    }
+
+   #message {
+  margin: 0;
+  color: white !important;
+  -webkit-text-fill-color: white;
+  opacity: 1 !important;
+
+  font-size: clamp(2rem, 7vw, 2.7rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.03em;
+
+  text-shadow: none;
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+    .fadeOut {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .fadeIn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .arrowButton {
+      margin-top: 38px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 72px;
+      height: 72px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.92);
+      font-size: 2.2rem;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition:
+        transform 0.18s ease,
+        background 0.18s ease,
+        opacity 0.18s ease;
+      box-shadow:
+        0 8px 30px rgba(0,0,0,0.18),
+        inset 0 1px 1px rgba(255,255,255,0.08);
+    }
+
+    .arrowButton:active {
+      transform: scale(0.92);
+      opacity: 0.72;
+      background: rgba(255,255,255,0.16);
+    }
+
+    @keyframes calmBackground {
+      from { background-position: 0% 50%; }
+      to { background-position: 100% 50%; }
+    }
+
+    @keyframes breathe {
+      0% { transform: scale(0.98); }
+      35% { transform: scale(1.03); }
+      100% { transform: scale(0.98); }
+    }
+
+    @keyframes floatCard {
+      from {
+        transform: translateY(0) scale(0.98);
+      }
+      to {
+        transform: translateY(-10px) scale(1.03);
+      }
+    }
+
+    @keyframes floatOne {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(60px, 90px) scale(1.18); }
+    }
+
+    @keyframes floatTwo {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(-70px, -60px) scale(1.12); }
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        transform: translate(-50%, -50%) scale(0.92);
+        opacity: 0.05;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.08);
+        opacity: 0.12;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(0.92);
+        opacity: 0.05;
+      }
+    }
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 45%,
+      rgba(0,0,0,0.22) 100%
+    );
+  z-index: 1;
+}
+  </style>
+</head>
+
+<body>
+  <div class="ambient ambient1"></div>
+  <div class="ambient ambient2"></div>
+  <div class="ambient ambient3"></div>
+
+  <main class="app">
+    <section class="card">
+      <p id="message">Olet turvassa juuri nyt.</p>
+    </section>
+
+    <button id="nextButton" class="arrowButton">→</button>
+  </main>
+
+  <script>
+    const messages = [
+      "Olet turvassa juuri nyt.",
+      "Hengitä rauhassa sisään.",
+      "Puhalla hitaasti ulos.",
+      "Katso ympärillesi ja nimeä yksi asia, jonka näet.",
+      "Tunne jalkasi lattiaa vasten.",
+      "Tämä tunne menee ohi.",
+      "Sinun ei tarvitse ratkaista mitään juuri nyt.",
+      "Ota seuraava pieni hengitys.",
+      "Keskity vain tähän hetkeen.",
+      "Hyvä. Jatka rauhallisesti."
+    ];
+
+    let index = 0;
+
+    const message = document.getElementById("message");
+    const button = document.getElementById("nextButton");
+
+    button.addEventListener("click", () => {
+      message.classList.remove("fadeIn");
+      message.classList.add("fadeOut");
+
+      setTimeout(() => {
+        index = (index + 1) % messages.length;
+        message.textContent = messages[index];
+
+        message.classList.remove("fadeOut");
+
+        requestAnimationFrame(() => {
+          message.classList.add("fadeIn");
+        });
+      }, 280);
+    });
+  </script>
+</body>
+</html>
