@@ -228,6 +228,40 @@
         opacity: 0.05;
       }
     }
+body.pulse .ambient1 {
+  animation:
+    floatOne 26s ease-in-out infinite alternate,
+    auroraPulse 900ms ease-out;
+}
+
+body.pulse .ambient2 {
+  animation:
+    floatTwo 32s ease-in-out infinite alternate,
+    auroraPulse 1100ms ease-out;
+}
+
+body.pulse .ambient3 {
+  animation:
+    pulseGlow 18s ease-in-out infinite,
+    auroraPulse 1200ms ease-out;
+}
+
+@keyframes auroraPulse {
+  0% {
+    opacity: 0.22;
+    filter: blur(90px);
+  }
+
+  45% {
+    opacity: 0.38;
+    filter: blur(75px);
+  }
+
+  100% {
+    opacity: 0.22;
+    filter: blur(90px);
+  }
+}
   </style>
 </head>
 
@@ -265,6 +299,15 @@
     const ambientElements = document.querySelectorAll(".ambient");
 
     button.addEventListener("click", () => {
+document.body.classList.remove("pulse");
+
+void document.body.offsetWidth;
+
+document.body.classList.add("pulse");
+
+setTimeout(() => {
+  document.body.classList.remove("pulse");
+}, 1200);
 if ("vibrate" in navigator) {
   navigator.vibrate(20);
 }
