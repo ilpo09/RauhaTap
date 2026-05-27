@@ -112,19 +112,38 @@ overflow: hidden;
         floatCard 18s ease-in-out infinite alternate;
     }
 
-    #message {
-      margin: 0;
-      color: white !important;
-      -webkit-text-fill-color: white;
-      opacity: 1 !important;
-      font-size: clamp(2rem, 7vw, 2.7rem);
-      font-weight: 600;
-      line-height: 1.35;
-      letter-spacing: -0.03em;
-      transition:
-        opacity 0.45s ease,
-        transform 0.45s ease;
-    }
+
+   #message {
+
+  margin: 0;
+
+  color: white !important;
+
+  -webkit-text-fill-color: white;
+
+  opacity: 1 !important;
+
+  font-size: clamp(2rem, 7vw, 2.7rem);
+
+  font-weight: 600;
+
+  line-height: 1.35;
+
+  letter-spacing: -0.03em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  text-align: center;
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
 
     .fadeOut {
       opacity: 0 !important;
