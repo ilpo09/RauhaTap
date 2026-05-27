@@ -12,8 +12,7 @@
   <title>Apukortti</title>
 
   <style>
-    html,
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       width: 100%;
@@ -35,6 +34,15 @@
       letter-spacing: -0.02em;
     }
 
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center, transparent 42%, rgba(0,0,0,0.24) 100%);
+      z-index: 1;
+    }
+
     .ambient {
       position: fixed;
       border-radius: 999px;
@@ -43,6 +51,7 @@
       pointer-events: none;
       mix-blend-mode: screen;
       z-index: 0;
+      transform: translate(var(--move-x, 0px), var(--move-y, 0px));
     }
 
     .ambient1 {
@@ -69,7 +78,6 @@
       background: #ffffff;
       top: 40%;
       left: 50%;
-      transform: translate(-50%, -50%);
       opacity: 0.08;
       animation: pulseGlow 18s ease-in-out infinite;
     }
@@ -77,10 +85,7 @@
     .app {
       width: min(90vw, 480px);
       min-height: 100dvh;
-      padding:
-        env(safe-area-inset-top)
-        24px
-        env(safe-area-inset-bottom);
+      padding: env(safe-area-inset-top) 24px env(safe-area-inset-bottom);
       text-align: center;
       z-index: 2;
       display: flex;
@@ -94,56 +99,43 @@
       width: 100%;
       height: 320px;
       padding: 42px;
-      border-radius: 38px;
+      border-radius: 48px;
       background: rgba(255,255,255,0.14);
       border: 1px solid rgba(255,255,255,0.22);
       display: flex;
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
-      backdrop-filter: blur(20px);
-overflow: hidden;
-      -webkit-backdrop-filter: blur(20px);
+      overflow: hidden;
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
       box-shadow:
-        0 20px 60px rgba(0,0,0,0.22),
-        inset 0 1px 1px rgba(255,255,255,0.12);
+        0 24px 70px rgba(0,0,0,0.24),
+        inset 0 1px 1px rgba(255,255,255,0.14);
       animation:
-        breathe 9s ease-in-out infinite,
-        floatCard 18s ease-in-out infinite alternate;
+        breathe 14s ease-in-out infinite,
+        floatCard 20s ease-in-out infinite alternate;
     }
 
-
-   #message {
-
-  margin: 0;
-
-  color: white !important;
-
-  -webkit-text-fill-color: white;
-
-  opacity: 1 !important;
-
-  font-size: clamp(2rem, 7vw, 2.7rem);
-
-  font-weight: 600;
-
-  line-height: 1.35;
-
-  letter-spacing: -0.03em;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 100%;
-
-  text-align: center;
-
-  transition:
-    opacity 0.45s ease,
-    transform 0.45s ease;
-}
+    #message {
+      margin: 0;
+      color: white !important;
+      -webkit-text-fill-color: white;
+      opacity: 1 !important;
+      font-size: clamp(2rem, 7vw, 2.7rem);
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.03em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition:
+        opacity 0.45s ease,
+        transform 0.45s ease;
+    }
 
     .fadeOut {
       opacity: 0 !important;
@@ -180,6 +172,7 @@ overflow: hidden;
       box-shadow:
         0 8px 30px rgba(0,0,0,0.18),
         inset 0 1px 1px rgba(255,255,255,0.08);
+      animation: floatArrow 5s ease-in-out infinite alternate;
     }
 
     .arrowButton:active {
@@ -204,14 +197,19 @@ overflow: hidden;
       to { transform: translateY(-10px) scale(1.03); }
     }
 
+    @keyframes floatArrow {
+      from { translate: 0 0; }
+      to { translate: 0 -4px; }
+    }
+
     @keyframes floatOne {
-      from { transform: translate(0, 0) scale(1); }
-      to { transform: translate(60px, 90px) scale(1.18); }
+      from { translate: 0 0; scale: 1; }
+      to { translate: 60px 90px; scale: 1.18; }
     }
 
     @keyframes floatTwo {
-      from { transform: translate(0, 0) scale(1); }
-      to { transform: translate(-70px, -60px) scale(1.12); }
+      from { translate: 0 0; scale: 1; }
+      to { translate: -70px -60px; scale: 1.12; }
     }
 
     @keyframes pulseGlow {
@@ -264,6 +262,7 @@ overflow: hidden;
 
     const message = document.getElementById("message");
     const button = document.getElementById("nextButton");
+    const ambientElements = document.querySelectorAll(".ambient");
 
     button.addEventListener("click", () => {
       message.classList.remove("fadeIn");
@@ -279,6 +278,17 @@ overflow: hidden;
           message.classList.add("fadeIn");
         });
       }, 280);
+    });
+
+    window.addEventListener("pointermove", (event) => {
+      const x = (event.clientX / window.innerWidth - 0.5) * 14;
+      const y = (event.clientY / window.innerHeight - 0.5) * 14;
+
+      ambientElements.forEach((el, i) => {
+        const strength = (i + 1) * 0.35;
+        el.style.setProperty("--move-x", `${x * strength}px`);
+        el.style.setProperty("--move-y", `${y * strength}px`);
+      });
     });
   </script>
 </body>
