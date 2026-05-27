@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-<meta name="viewport"
-content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17364a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Apukortti">
+  <link rel="manifest" href="manifest.json">
+
   <title>Apukortti</title>
 
   <style>
-body {
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      overflow: hidden;
+      background: #17364a;
+    }
 
-  min-height: 100dvh;
-
-  padding:
-    env(safe-area-inset-top)
-    0
-    env(safe-area-inset-bottom)
-    0;
-
-  background:
-    linear-gradient(
-      135deg,
-      #17364a,
-      #3f7b87,
-      #6da9a4
-    );
-
-  background-size: 300% 300%;
-
-  animation:
-    calmBackground 18s ease-in-out infinite alternate;
-}
+    body {
+      min-height: 100dvh;
+      font-family: 'Nunito', system-ui, sans-serif;
+      color: white;
+      background: linear-gradient(135deg, #17364a, #3f7b87, #6da9a4);
+      background-size: 300% 300%;
+      animation: calmBackground 18s ease-in-out infinite alternate;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: -0.02em;
+    }
 
     .ambient {
       position: fixed;
@@ -39,6 +42,7 @@ body {
       opacity: 0.22;
       pointer-events: none;
       mix-blend-mode: screen;
+      z-index: 0;
     }
 
     .ambient1 {
@@ -71,23 +75,23 @@ body {
     }
 
     .app {
-  width: min(90vw, 480px);
-  text-align: center;
-  z-index: 2;
-
-  min-height: 100dvh;
-  padding:
-    max(24px, env(safe-area-inset-top))
-    24px
-    max(24px, env(safe-area-inset-bottom));
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+      width: min(90vw, 480px);
+      min-height: 100dvh;
+      padding:
+        env(safe-area-inset-top)
+        24px
+        env(safe-area-inset-bottom);
+      text-align: center;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+    }
 
     .card {
-color: white;
+      width: 100%;
       min-height: 230px;
       padding: 42px;
       border-radius: 38px;
@@ -96,6 +100,7 @@ color: white;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-sizing: border-box;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       box-shadow:
@@ -106,31 +111,27 @@ color: white;
         floatCard 18s ease-in-out infinite alternate;
     }
 
-   #message {
-  margin: 0;
-  color: white !important;
-  -webkit-text-fill-color: white;
-  opacity: 1 !important;
-
-  font-size: clamp(2rem, 7vw, 2.7rem);
-  font-weight: 600;
-  line-height: 1.35;
-  letter-spacing: -0.03em;
-
-  text-shadow: none;
-
-  transition:
-    opacity 0.45s ease,
-    transform 0.45s ease;
-}
+    #message {
+      margin: 0;
+      color: white !important;
+      -webkit-text-fill-color: white;
+      opacity: 1 !important;
+      font-size: clamp(2rem, 7vw, 2.7rem);
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.03em;
+      transition:
+        opacity 0.45s ease,
+        transform 0.45s ease;
+    }
 
     .fadeOut {
-      opacity: 0;
+      opacity: 0 !important;
       transform: translateY(6px);
     }
 
     .fadeIn {
-      opacity: 1;
+      opacity: 1 !important;
       transform: translateY(0);
     }
 
@@ -143,7 +144,7 @@ color: white;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.18);
       background: rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.92);
+      color: white;
       font-size: 2.2rem;
       font-weight: 300;
       display: flex;
@@ -179,12 +180,8 @@ color: white;
     }
 
     @keyframes floatCard {
-      from {
-        transform: translateY(0) scale(0.98);
-      }
-      to {
-        transform: translateY(-10px) scale(1.03);
-      }
+      from { transform: translateY(0) scale(0.98); }
+      to { transform: translateY(-10px) scale(1.03); }
     }
 
     @keyframes floatOne {
@@ -202,38 +199,17 @@ color: white;
         transform: translate(-50%, -50%) scale(0.92);
         opacity: 0.05;
       }
+
       50% {
         transform: translate(-50%, -50%) scale(1.08);
         opacity: 0.12;
       }
+
       100% {
         transform: translate(-50%, -50%) scale(0.92);
         opacity: 0.05;
       }
     }
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      circle at center,
-      transparent 45%,
-      rgba(0,0,0,0.22) 100%
-    );
-  z-index: 1;
-}
-html,
-body {
-  margin: 0;
-  padding: 0;
-
-  width: 100%;
-  min-height: 100%;
-
-  background: #17364a;
-}
   </style>
 </head>
 
@@ -247,7 +223,7 @@ body {
       <p id="message">Olet turvassa juuri nyt.</p>
     </section>
 
-    <button id="nextButton" class="arrowButton">→</button>
+    <button id="nextButton" class="arrowButton" aria-label="Seuraava teksti">→</button>
   </main>
 
   <script>
