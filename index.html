@@ -6,10 +6,11 @@
   <meta name="theme-color" content="#17364a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Apukortti">
+  <meta name="apple-mobile-web-app-title" content="RauhaTap">
+  <link rel="icon" href="rauhatap-circle-three-waves-small-cutout.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.json">
 
-  <title>Apukortti</title>
+  <title>RauhaTap</title>
 
   <style>
     html, body {
@@ -39,7 +40,9 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(circle at center, transparent 42%, rgba(0,0,0,0.24) 100%);
+      background:
+        radial-gradient(circle at 82% 78%, rgba(255,236,204,0.1), transparent 30%),
+        radial-gradient(circle at center, transparent 42%, rgba(0,0,0,0.24) 100%);
       z-index: 1;
     }
 
@@ -140,6 +143,35 @@
       border-color: rgba(255,255,255,0.24);
     }
 
+    .brandLogo {
+      position: fixed;
+      top: max(18px, env(safe-area-inset-top));
+      left: 74px;
+      height: 46px;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      color: white;
+      font-size: 1.55rem;
+      font-weight: 720;
+      line-height: 1;
+      letter-spacing: 0;
+      text-decoration: none;
+      text-shadow: 0 8px 22px rgba(0,0,0,0.16);
+      pointer-events: none;
+      animation: logoReveal 0.75s ease-out both;
+    }
+
+    .brandMark {
+      width: 46px;
+      height: 46px;
+      display: block;
+      flex: 0 0 auto;
+      overflow: visible;
+      color: #143447;
+    }
+
     .card {
       position: relative;
       width: 100%;
@@ -179,6 +211,19 @@
       animation: breatheHalo 7s ease-in-out infinite;
     }
 
+    .card::after {
+      content: "";
+      position: absolute;
+      top: -38%;
+      left: -54%;
+      width: 58%;
+      height: 176%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      transform: rotate(18deg);
+      pointer-events: none;
+      animation: glassShimmer 11s ease-in-out infinite;
+    }
+
     #message {
       margin: 0;
       color: white !important;
@@ -213,6 +258,7 @@
     }
 
     .arrowButton {
+      position: relative;
       margin-top: 32px;
       margin-left: auto;
       margin-right: auto;
@@ -245,6 +291,23 @@
       animation: floatArrow 5s ease-in-out infinite alternate;
     }
 
+    .arrowButton::before,
+    .arrowButton::after {
+      content: "";
+      position: absolute;
+      inset: -9px;
+      border-radius: 999px;
+      border: 1px solid rgba(220,255,248,0.18);
+      pointer-events: none;
+      animation: arrowBreath 4.8s ease-in-out infinite;
+    }
+
+    .arrowButton::after {
+      inset: -18px;
+      opacity: 0;
+      animation-delay: 1.2s;
+    }
+
     .arrowButton:active {
       transform: scale(0.94);
       opacity: 0.82;
@@ -252,6 +315,10 @@
       background:
         radial-gradient(circle at 50% 18%, rgba(255,255,255,0.32), transparent 34%),
         rgba(255,255,255,0.16);
+    }
+
+    .arrowButton.ripple::after {
+      animation: calmRipple 680ms ease-out;
     }
 
     .progressDots {
@@ -361,6 +428,58 @@
       to { translate: 0 -4px; }
     }
 
+    @keyframes arrowBreath {
+      0%, 100% {
+        opacity: 0.18;
+        transform: scale(0.96);
+      }
+
+      50% {
+        opacity: 0.34;
+        transform: scale(1.06);
+      }
+    }
+
+    @keyframes calmRipple {
+      0% {
+        opacity: 0.36;
+        transform: scale(0.86);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.48);
+      }
+    }
+
+    @keyframes glassShimmer {
+      0%, 64% {
+        opacity: 0;
+        transform: translateX(0) rotate(18deg);
+      }
+
+      76% {
+        opacity: 0.75;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(340%) rotate(18deg);
+      }
+    }
+
+    @keyframes logoReveal {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+
+      to {
+        opacity: 0.92;
+        transform: translateY(0);
+      }
+    }
+
     @keyframes floatOne {
       from { translate: 0 0; scale: 1; }
       to { translate: 60px 90px; scale: 1.18; }
@@ -428,7 +547,9 @@ body.pulse .ambient3 {
       }
 
       body::after {
-        background: radial-gradient(circle at center, transparent 36%, rgba(0,0,0,0.34) 100%);
+        background:
+          radial-gradient(circle at 82% 78%, rgba(255,236,204,0.08), transparent 30%),
+          radial-gradient(circle at center, transparent 36%, rgba(0,0,0,0.34) 100%);
       }
 
       .ambient1,
@@ -440,6 +561,20 @@ body.pulse .ambient3 {
         background:
           linear-gradient(145deg, rgba(255,255,255,0.14), rgba(255,255,255,0.07)),
           rgba(255,255,255,0.1);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body,
+      .ambient,
+      .card,
+      .card::before,
+      .card::after,
+      .arrowButton,
+      .arrowButton::before,
+      .arrowButton::after,
+      .brandLogo {
+        animation: none !important;
       }
     }
 
@@ -463,6 +598,12 @@ body.pulse .ambient3 {
       #message {
         font-size: clamp(1.7rem, 8vw, 2.28rem);
       }
+
+      .brandLogo {
+        height: 46px;
+        left: 72px;
+        font-size: 1.42rem;
+      }
     }
   </style>
 </head>
@@ -477,6 +618,10 @@ body.pulse .ambient3 {
     <span></span>
     <span></span>
   </button>
+  <div class="brandLogo" aria-label="RauhaTap">
+    <img class="brandMark" src="rauhatap-circle-three-waves-small-cutout.svg" alt="">
+    <span>RauhaTap</span>
+  </div>
 
   <div id="infoOverlay" class="infoOverlay" aria-hidden="true">
     <div class="infoPanel" role="dialog" aria-modal="false" aria-label="Aloitusnäytölle tallentaminen">
@@ -555,13 +700,16 @@ body.pulse .ambient3 {
 
     button.addEventListener("click", () => {
 document.body.classList.remove("pulse");
+button.classList.remove("ripple");
 
 void document.body.offsetWidth;
 
 document.body.classList.add("pulse");
+button.classList.add("ripple");
 
 setTimeout(() => {
   document.body.classList.remove("pulse");
+  button.classList.remove("ripple");
 }, 1200);
 if ("vibrate" in navigator) {
   navigator.vibrate(20);
