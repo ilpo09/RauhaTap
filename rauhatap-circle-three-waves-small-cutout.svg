@@ -1,0 +1,13 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <mask id="smallCircleWavesCutout">
+      <rect width="512" height="512" fill="black"/>
+      <circle cx="256" cy="256" r="168" fill="white"/>
+      <path d="M148 188C180 156 220 156 256 188C292 220 332 220 364 188" stroke="black" stroke-width="25" stroke-linecap="round"/>
+      <path d="M148 256C180 224 220 224 256 256C292 288 332 288 364 256" stroke="black" stroke-width="25" stroke-linecap="round"/>
+      <path d="M148 324C180 292 220 292 256 324C292 356 332 356 364 324" stroke="black" stroke-width="25" stroke-linecap="round"/>
+    </mask>
+  </defs>
+
+  <rect width="512" height="512" mask="url(#smallCircleWavesCutout)" fill="#FFFFFF"/>
+</svg>
