@@ -26,7 +26,12 @@
       min-height: 100dvh;
       font-family: Inter, ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
       color: white;
-      background: linear-gradient(135deg, #142f43, #3a7280, #70aaa0);
+      --theme-base: linear-gradient(135deg, #142f43, #3a7280, #70aaa0);
+      --theme-glow: radial-gradient(ellipse at 50% 118%, rgba(196,247,232,0.24), transparent 42%);
+      --theme-vignette: radial-gradient(circle at center, transparent 42%, rgba(0,0,0,0.24) 100%);
+      background:
+        var(--theme-glow),
+        var(--theme-base);
       background-size: 300% 300%;
       animation: calmBackground 18s ease-in-out infinite alternate;
       display: flex;
@@ -42,8 +47,20 @@
       pointer-events: none;
       background:
         radial-gradient(circle at 82% 78%, rgba(255,236,204,0.1), transparent 30%),
-        radial-gradient(circle at center, transparent 42%, rgba(0,0,0,0.24) 100%);
+        var(--theme-vignette);
       z-index: 1;
+    }
+
+    body[data-theme="day"] {
+      --theme-base: linear-gradient(135deg, #173f57, #4f898e, #86b9ad);
+      --theme-glow: radial-gradient(ellipse at 50% 118%, rgba(224,246,231,0.14), transparent 44%);
+      --theme-vignette: radial-gradient(circle at center, transparent 42%, rgba(18,55,70,0.27) 100%);
+    }
+
+    body[data-theme="night"] {
+      --theme-base: linear-gradient(135deg, #102636, #2e6170, #547f7b);
+      --theme-glow: radial-gradient(ellipse at 50% 118%, rgba(174,231,219,0.18), transparent 42%);
+      --theme-vignette: radial-gradient(circle at center, transparent 36%, rgba(0,0,0,0.34) 100%);
     }
 
     .ambient {
@@ -259,18 +276,19 @@
 
     .arrowButton {
       position: relative;
-      margin-top: 32px;
+      margin-top: 34px;
       margin-left: auto;
       margin-right: auto;
-      width: 76px;
-      height: 76px;
+      width: 84px;
+      height: 84px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.24);
+      border: 1px solid rgba(226,255,249,0.34);
       background:
-        radial-gradient(circle at 50% 18%, rgba(255,255,255,0.26), transparent 34%),
-        rgba(255,255,255,0.1);
+        radial-gradient(circle at 50% 22%, rgba(255,255,255,0.38), transparent 34%),
+        radial-gradient(circle at 50% 58%, rgba(146,238,224,0.16), transparent 62%),
+        rgba(255,255,255,0.12);
       color: white;
-      font-size: 2.15rem;
+      font-size: 2.28rem;
       font-weight: 300;
       display: flex;
       align-items: center;
@@ -284,10 +302,10 @@
         border-color 0.18s ease,
         opacity 0.18s ease;
       box-shadow:
-        0 16px 38px rgba(0,0,0,0.18),
-        0 0 36px rgba(169,236,226,0.08),
-        inset 0 1px 1px rgba(255,255,255,0.18),
-        inset 0 -18px 38px rgba(22,75,88,0.12);
+        0 20px 46px rgba(0,0,0,0.2),
+        0 0 54px rgba(169,236,226,0.14),
+        inset 0 1px 1px rgba(255,255,255,0.26),
+        inset 0 -22px 42px rgba(22,75,88,0.14);
       animation: floatArrow 5s ease-in-out infinite alternate;
     }
 
@@ -295,15 +313,15 @@
     .arrowButton::after {
       content: "";
       position: absolute;
-      inset: -9px;
+      inset: -10px;
       border-radius: 999px;
-      border: 1px solid rgba(220,255,248,0.18);
+      border: 1px solid rgba(220,255,248,0.2);
       pointer-events: none;
       animation: arrowBreath 4.8s ease-in-out infinite;
     }
 
     .arrowButton::after {
-      inset: -18px;
+      inset: -22px;
       opacity: 0;
       animation-delay: 1.2s;
     }
@@ -313,8 +331,9 @@
       opacity: 0.82;
       border-color: rgba(255,255,255,0.32);
       background:
-        radial-gradient(circle at 50% 18%, rgba(255,255,255,0.32), transparent 34%),
-        rgba(255,255,255,0.16);
+        radial-gradient(circle at 50% 22%, rgba(255,255,255,0.42), transparent 34%),
+        radial-gradient(circle at 50% 58%, rgba(146,238,224,0.22), transparent 62%),
+        rgba(255,255,255,0.17);
     }
 
     .arrowButton.ripple::after {
@@ -393,6 +412,53 @@
 
     .infoOverlay.open .infoPanel {
       transform: translateY(0);
+    }
+
+    .themeSwitch {
+      width: 100%;
+      height: 48px;
+      margin-top: 18px;
+      padding: 4px;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      box-sizing: border-box;
+    }
+
+    .themeOption {
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: rgba(255,255,255,0.72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font: inherit;
+      font-size: 0.94rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        box-shadow 0.18s ease;
+    }
+
+    .themeOption.active {
+      background: rgba(255,255,255,0.18);
+      color: white;
+      box-shadow:
+        0 8px 22px rgba(0,0,0,0.12),
+        inset 0 1px 1px rgba(255,255,255,0.14);
+    }
+
+    .themeOption svg {
+      width: 18px;
+      height: 18px;
+      display: block;
     }
 
     @keyframes calmBackground {
@@ -542,14 +608,16 @@ body.pulse .ambient3 {
 }
 
     @media (prefers-color-scheme: dark) {
-      body {
-        background: linear-gradient(135deg, #102636, #2e6170, #547f7b);
+      body:not([data-theme]) {
+        --theme-base: linear-gradient(135deg, #102636, #2e6170, #547f7b);
+        --theme-glow: radial-gradient(ellipse at 50% 118%, rgba(174,231,219,0.18), transparent 42%);
+        --theme-vignette: radial-gradient(circle at center, transparent 36%, rgba(0,0,0,0.34) 100%);
       }
 
       body::after {
         background:
           radial-gradient(circle at 82% 78%, rgba(255,236,204,0.08), transparent 30%),
-          radial-gradient(circle at center, transparent 36%, rgba(0,0,0,0.34) 100%);
+          var(--theme-vignette);
       }
 
       .ambient1,
@@ -626,6 +694,20 @@ body.pulse .ambient3 {
   <div id="infoOverlay" class="infoOverlay" aria-hidden="true">
     <div class="infoPanel" role="dialog" aria-modal="false" aria-label="Aloitusnäytölle tallentaminen">
       Voit tallentaa tämän aloitusnäytölle, jotta Apukortti on nopeasti saatavilla myös ilman nettiä.
+      <div class="themeSwitch" aria-label="Väriteema">
+        <button id="dayThemeButton" class="themeOption" type="button" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 4V2M12 22V20M20 12H22M2 12H4M18.36 5.64L19.78 4.22M4.22 19.78L5.64 18.36M18.36 18.36L19.78 19.78M4.22 4.22L5.64 5.64M12 17A5 5 0 1 0 12 7A5 5 0 0 0 12 17Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Päivä
+        </button>
+        <button id="nightThemeButton" class="themeOption" type="button" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 14.8A8.5 8.5 0 0 1 9.2 3A7.2 7.2 0 1 0 21 14.8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Yö
+        </button>
+      </div>
     </div>
   </div>
 
@@ -660,7 +742,22 @@ body.pulse .ambient3 {
     const ambientElements = document.querySelectorAll(".ambient");
     const dotsContainer = document.getElementById("progressDots");
     const menuButton = document.getElementById("menuButton");
+    const dayThemeButton = document.getElementById("dayThemeButton");
+    const nightThemeButton = document.getElementById("nightThemeButton");
     const infoOverlay = document.getElementById("infoOverlay");
+
+    const setTheme = (theme) => {
+      document.body.dataset.theme = theme;
+      localStorage.setItem("rauhatap-theme", theme);
+      dayThemeButton.classList.toggle("active", theme === "day");
+      nightThemeButton.classList.toggle("active", theme === "night");
+      dayThemeButton.setAttribute("aria-pressed", String(theme === "day"));
+      nightThemeButton.setAttribute("aria-pressed", String(theme === "night"));
+    };
+
+    const savedTheme = localStorage.getItem("rauhatap-theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setTheme(savedTheme || (prefersDark ? "night" : "day"));
 
     messages.forEach((_, dotIndex) => {
       const dot = document.createElement("span");
@@ -685,6 +782,9 @@ body.pulse .ambient3 {
       infoOverlay.setAttribute("aria-hidden", String(!isOpen));
       menuButton.setAttribute("aria-expanded", String(isOpen));
     });
+
+    dayThemeButton.addEventListener("click", () => setTheme("day"));
+    nightThemeButton.addEventListener("click", () => setTheme("night"));
 
     infoOverlay.addEventListener("click", (event) => {
       if (event.target === infoOverlay) {
