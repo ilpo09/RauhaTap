@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="fi" style="background-color:#203b42;">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -10,6 +10,18 @@
   <link rel="manifest" href="manifest.json">
 
   <title>Valwen</title>
+
+  <script>
+    (() => {
+      try {
+        const savedTheme = localStorage.getItem("valwen-theme") || localStorage.getItem("rauhatap-theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = savedTheme || (prefersDark ? "night" : "day");
+      } catch (error) {
+        document.documentElement.dataset.theme = "night";
+      }
+    })();
+  </script>
 
   <style>
     html {
@@ -35,7 +47,7 @@
       min-height: 100svh;
       min-height: 100dvh;
       overflow: hidden;
-      background-color: transparent;
+      background-color: #203b42;
     }
 
     html[data-theme="day"] {
@@ -74,6 +86,8 @@
       -webkit-font-smoothing: antialiased;
       text-rendering: geometricPrecision;
       color: white;
+      background: inherit;
+      background-color: #203b42;
       --shell-color: #203b42;
       --theme-base: linear-gradient(145deg, #243947 0%, #5b7876 48%, #9ea990 100%);
       --theme-center: radial-gradient(circle at 50% 50%, rgba(190,221,207,0.5), rgba(118,170,163,0.32) 34%, rgba(82,113,125,0.16) 58%, transparent 76%);
