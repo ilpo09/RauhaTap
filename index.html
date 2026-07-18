@@ -181,24 +181,24 @@
 
     .edgeFadeTop {
       top: -1px;
-      height: calc(env(safe-area-inset-top) + 132px);
-      min-height: 132px;
+      height: calc(env(safe-area-inset-top) + 168px);
+      min-height: 168px;
       background: linear-gradient(
         180deg,
-        rgba(var(--edge-top-rgb), 0.82) 0%,
-        rgba(var(--edge-top-rgb), 0.54) 42%,
+        rgba(var(--edge-top-rgb), 0.92) 0%,
+        rgba(var(--edge-top-rgb), 0.62) 42%,
         rgba(var(--edge-top-rgb), 0) 100%
       );
     }
 
     .edgeFadeBottom {
       bottom: -1px;
-      height: calc(env(safe-area-inset-bottom) + 172px);
-      min-height: 172px;
+      height: calc(env(safe-area-inset-bottom) + 220px);
+      min-height: 220px;
       background: linear-gradient(
         0deg,
-        rgba(var(--edge-bottom-rgb), 0.86) 0%,
-        rgba(var(--edge-bottom-rgb), 0.52) 45%,
+        rgba(var(--edge-bottom-rgb), 0.94) 0%,
+        rgba(var(--edge-bottom-rgb), 0.64) 45%,
         rgba(var(--edge-bottom-rgb), 0) 100%
       );
     }
@@ -1912,6 +1912,45 @@ body.pulse .ambient3 {
       requestAnimationFrame(animateSand);
     } else {
       drawFlow(0);
+    }
+
+    if ("serviceWorker" in navigator) {
+      let refreshingForUpdate = false;
+
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (refreshingForUpdate) {
+          return;
+        }
+
+        refreshingForUpdate = true;
+        window.location.reload();
+      });
+
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js")
+          .then((registration) => {
+            registration.update();
+
+            if (registration.waiting) {
+              registration.waiting.postMessage({ type: "SKIP_WAITING" });
+            }
+
+            registration.addEventListener("updatefound", () => {
+              const nextWorker = registration.installing;
+
+              if (!nextWorker) {
+                return;
+              }
+
+              nextWorker.addEventListener("statechange", () => {
+                if (nextWorker.state === "installed" && navigator.serviceWorker.controller) {
+                  nextWorker.postMessage({ type: "SKIP_WAITING" });
+                }
+              });
+            });
+          })
+          .catch(() => {});
+      });
     }
   </script>
 </body>
