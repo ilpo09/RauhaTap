@@ -1,4 +1,4 @@
-const CACHE_NAME = "valwen-v3";
+const CACHE_NAME = "valwen-v4";
 
 const FILES = [
   "./",
