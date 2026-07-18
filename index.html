@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#263f47">
+  <meta name="theme-color" content="#223d43">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Valwen">
@@ -15,7 +15,7 @@
     html {
       height: 100%;
       min-height: 100%;
-      background: #263f47;
+      background: #223d43;
     }
 
     html, body {
@@ -25,13 +25,15 @@
       height: 100%;
       min-height: 100%;
       overflow: hidden;
-      background-color: #263f47;
+      background-color: #223d43;
     }
 
     body {
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
-      min-height: 100dvh;
+      position: fixed;
+      inset: 0;
+      height: 100%;
+      min-height: 100%;
+      overflow: hidden;
       font-family: Inter, "SF Pro Display", "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
       text-rendering: geometricPrecision;
@@ -86,9 +88,9 @@
 
     .flowCanvas {
       position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      inset: -120px 0;
+      width: 100vw;
+      height: calc(100% + 240px);
       pointer-events: none;
       opacity: 0.92;
       mix-blend-mode: screen;
@@ -167,10 +169,12 @@
     }
 
     .app {
-      position: relative;
-      width: min(90vw, 480px);
-      min-height: 100dvh;
-      padding: env(safe-area-inset-top) 24px env(safe-area-inset-bottom);
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      padding: calc(env(safe-area-inset-top) + 24px) 24px calc(env(safe-area-inset-bottom) + 30px);
       text-align: center;
       z-index: 2;
       display: flex;
@@ -294,9 +298,8 @@
       text-align: center;
       font-variation-settings: "wght" 610;
       transition:
-        opacity 0.62s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.62s cubic-bezier(0.22, 1, 0.36, 1),
-        filter 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+        opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
       text-wrap: balance;
       text-shadow:
         0 2px 22px rgba(0,0,0,0.18),
@@ -313,14 +316,12 @@
 
     .fadeOut {
       opacity: 0 !important;
-      transform: translateY(10px) scale(0.992);
-      filter: blur(2px);
+      transform: translateY(7px) scale(0.996);
     }
 
     .fadeIn {
       opacity: 1 !important;
       transform: translateY(0);
-      filter: blur(0);
     }
 
     .arrowButton {
@@ -1133,10 +1134,10 @@ body.pulse .ambient3 {
 
     @media (max-width: 420px) {
       .app {
-        width: min(91vw, 480px);
         padding-left: 18px;
         padding-right: 18px;
-        transform: translateY(clamp(14px, 3.2dvh, 30px));
+        padding-bottom: calc(env(safe-area-inset-bottom) + 38px);
+        transform: translateY(clamp(34px, 7dvh, 62px));
       }
 
       .card {
@@ -1274,7 +1275,7 @@ body.pulse .ambient3 {
     };
     const themeColors = {
       day: "#5f7f83",
-      night: "#263f47"
+      night: "#223d43"
     };
     const themeMeta = document.querySelector('meta[name="theme-color"]');
 
@@ -1476,13 +1477,13 @@ body.pulse .ambient3 {
         requestAnimationFrame(() => {
           message.classList.add("fadeIn");
         });
-      }, 420);
+      }, 190);
 
       setTimeout(() => {
         isTransitioning = false;
         button.disabled = false;
         prevButton.disabled = false;
-      }, 960);
+      }, 540);
     };
 
     button.addEventListener("click", () => {
@@ -1558,7 +1559,7 @@ body.pulse .ambient3 {
     const resizeFlowCanvas = () => {
       canvasScale = Math.min(window.devicePixelRatio || 1, 1.5);
       canvasWidth = window.innerWidth;
-      canvasHeight = window.innerHeight;
+      canvasHeight = window.innerHeight + 240;
       flowCanvas.width = Math.round(canvasWidth * canvasScale);
       flowCanvas.height = Math.round(canvasHeight * canvasScale);
       flowContext.setTransform(canvasScale, 0, 0, canvasScale, 0, 0);
@@ -1587,7 +1588,7 @@ body.pulse .ambient3 {
       const minSide = Math.min(canvasWidth, canvasHeight);
       const maxRadius = Math.max(canvasWidth, canvasHeight) * 0.58;
       const centerX = canvasWidth * 0.5 + pointerCurrent.x * 11;
-      const centerY = canvasHeight * 0.5 + pointerCurrent.y * 9;
+      const centerY = canvasHeight * 0.5 - 8 + pointerCurrent.y * 9;
       const isNight = document.body.dataset.theme === "night";
       const ringColor = isNight ? "190,242,226" : "232,249,244";
       const grainColor = isNight ? "174,237,220" : "232,250,244";
