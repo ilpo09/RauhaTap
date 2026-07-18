@@ -42,13 +42,11 @@
       margin: 0;
       padding: 0;
       width: 100%;
-      height: 100%;
       min-height: 100%;
       min-height: -webkit-fill-available;
       min-height: 100svh;
       min-height: 100dvh;
-      overflow: hidden;
-      overscroll-behavior: none;
+      overflow-x: hidden;
       touch-action: manipulation;
       background-color: #203b42;
     }
@@ -79,14 +77,15 @@
     }
 
     body {
-      position: fixed;
-      inset: 0;
-      height: 100%;
+      position: relative;
+      height: auto;
       min-height: 100%;
       min-height: -webkit-fill-available;
-      min-height: 100svh;
-      min-height: 100dvh;
-      overflow: hidden;
+      min-height: calc(100svh + var(--scroll-tail));
+      min-height: calc(100dvh + var(--scroll-tail));
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
       font-family: Inter, "SF Pro Display", "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
       text-rendering: geometricPrecision;
@@ -109,9 +108,7 @@
       --ring-y: 50%;
       --edge-top-rgb: 32, 59, 66;
       --edge-bottom-rgb: 32, 59, 66;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      --scroll-tail: 180px;
       letter-spacing: 0;
     }
 
@@ -272,10 +269,11 @@
     }
 
     .app {
-      position: fixed;
-      inset: 0;
+      position: sticky;
+      top: 0;
       width: 100%;
-      height: 100%;
+      height: 100svh;
+      height: 100dvh;
       min-height: 0;
       min-height: 100svh;
       min-height: 100dvh;
@@ -287,6 +285,26 @@
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
+    }
+
+    .scrollBreathingSpace {
+      position: relative;
+      height: calc(env(safe-area-inset-bottom) + var(--scroll-tail));
+      margin-top: calc(var(--scroll-tail) * -1);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .scrollBreathingSpace::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(var(--edge-bottom-rgb), 0) 0%,
+        rgba(var(--edge-bottom-rgb), 0.18) 38%,
+        rgba(var(--edge-bottom-rgb), 0.68) 100%
+      );
     }
 
     .cardFilmGlow {
@@ -1341,6 +1359,7 @@ body.pulse .ambient3 {
     </div>
     <div id="progressDots" class="progressDots" aria-hidden="true"></div>
   </main>
+  <div class="scrollBreathingSpace" aria-hidden="true"></div>
 
   <script>
     const defaultMessages = [
