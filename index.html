@@ -42,11 +42,13 @@
       margin: 0;
       padding: 0;
       width: 100%;
+      height: 100%;
       min-height: 100%;
       min-height: -webkit-fill-available;
       min-height: 100svh;
       min-height: 100dvh;
-      overflow-x: hidden;
+      overflow: hidden;
+      overscroll-behavior: none;
       touch-action: manipulation;
       background-color: #203b42;
     }
@@ -77,15 +79,14 @@
     }
 
     body {
-      position: relative;
-      height: auto;
+      position: fixed;
+      inset: 0;
+      height: 100%;
       min-height: 100%;
       min-height: -webkit-fill-available;
-      min-height: calc(100svh + var(--scroll-tail));
-      min-height: calc(100dvh + var(--scroll-tail));
-      overflow-y: auto;
-      overscroll-behavior-y: contain;
-      -webkit-overflow-scrolling: touch;
+      min-height: 100svh;
+      min-height: 100dvh;
+      overflow: hidden;
       font-family: Inter, "SF Pro Display", "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
       text-rendering: geometricPrecision;
@@ -269,11 +270,10 @@
     }
 
     .app {
-      position: sticky;
-      top: 0;
+      position: fixed;
+      inset: 0;
       width: 100%;
-      height: 100svh;
-      height: 100dvh;
+      height: 100%;
       min-height: 0;
       min-height: 100svh;
       min-height: 100dvh;
@@ -288,6 +288,7 @@
     }
 
     .scrollBreathingSpace {
+      display: none;
       position: relative;
       height: calc(env(safe-area-inset-bottom) + var(--scroll-tail));
       margin-top: calc(var(--scroll-tail) * -1);
@@ -305,6 +306,42 @@
         rgba(var(--edge-bottom-rgb), 0.18) 38%,
         rgba(var(--edge-bottom-rgb), 0.68) 100%
       );
+    }
+
+    @media (max-width: 760px) {
+      html,
+      body {
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior-y: contain;
+      }
+
+      body {
+        position: relative;
+        inset: auto;
+        height: auto;
+        min-height: calc(100svh + var(--scroll-tail));
+        min-height: calc(100dvh + var(--scroll-tail));
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .app {
+        position: sticky;
+        top: 0;
+        height: 100svh;
+        height: 100dvh;
+      }
+
+      .scrollBreathingSpace {
+        display: block;
+        background: transparent;
+      }
+
+      .scrollBreathingSpace::before {
+        display: none;
+      }
     }
 
     .cardFilmGlow {
