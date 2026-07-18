@@ -107,6 +107,8 @@
       --ring-scale: 1;
       --ring-x: 50%;
       --ring-y: 50%;
+      --edge-top-rgb: 32, 59, 66;
+      --edge-bottom-rgb: 32, 59, 66;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -169,6 +171,38 @@
       z-index: 1;
     }
 
+    .edgeFade {
+      position: fixed;
+      left: 0;
+      right: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .edgeFadeTop {
+      top: -1px;
+      height: calc(env(safe-area-inset-top) + 132px);
+      min-height: 132px;
+      background: linear-gradient(
+        180deg,
+        rgba(var(--edge-top-rgb), 0.82) 0%,
+        rgba(var(--edge-top-rgb), 0.54) 42%,
+        rgba(var(--edge-top-rgb), 0) 100%
+      );
+    }
+
+    .edgeFadeBottom {
+      bottom: -1px;
+      height: calc(env(safe-area-inset-bottom) + 172px);
+      min-height: 172px;
+      background: linear-gradient(
+        0deg,
+        rgba(var(--edge-bottom-rgb), 0.86) 0%,
+        rgba(var(--edge-bottom-rgb), 0.52) 45%,
+        rgba(var(--edge-bottom-rgb), 0) 100%
+      );
+    }
+
     body[data-theme="day"] {
       --shell-color: #365e64;
       --theme-base: linear-gradient(180deg, #54787e 0%, #7fa095 50%, #6d8f8a 75%, #365e64 100%);
@@ -177,6 +211,8 @@
       --theme-glow: radial-gradient(circle at 50% 52%, rgba(255,255,250,0.105), transparent 46%);
       --theme-vignette: radial-gradient(circle at center, transparent 28%, rgba(54,91,101,0.34) 64%, rgba(25,54,66,0.62) 100%);
       --grain-opacity: 0.23;
+      --edge-top-rgb: 54, 94, 100;
+      --edge-bottom-rgb: 54, 94, 100;
     }
 
     body[data-theme="night"] {
@@ -187,6 +223,8 @@
       --theme-glow: radial-gradient(circle at 50% 52%, rgba(182,229,213,0.16), transparent 43%);
       --theme-vignette: radial-gradient(circle at center, transparent 30%, rgba(12,38,50,0.32) 62%, rgba(4,15,23,0.62) 100%);
       --grain-opacity: 0.3;
+      --edge-top-rgb: 23, 47, 58;
+      --edge-bottom-rgb: 23, 47, 58;
     }
 
     .ambient {
@@ -1238,6 +1276,8 @@ body.pulse .ambient3 {
 <body>
   <canvas id="flowCanvas" class="flowCanvas" aria-hidden="true"></canvas>
   <div class="pageVignette" aria-hidden="true"></div>
+  <div class="edgeFade edgeFadeTop" aria-hidden="true"></div>
+  <div class="edgeFade edgeFadeBottom" aria-hidden="true"></div>
   <div class="ambient ambient1"></div>
   <div class="ambient ambient2"></div>
   <div class="ambient ambient3"></div>
@@ -1344,8 +1384,8 @@ body.pulse .ambient3 {
       legacyTheme: "rauhatap-theme"
     };
     const themeColors = {
-      day: "#5f7f83",
-      night: "#223d43"
+      day: "#365e64",
+      night: "#172f3a"
     };
     const themeMeta = document.querySelector('meta[name="theme-color"]');
 
