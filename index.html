@@ -626,21 +626,6 @@
       box-shadow: 0 0 18px rgba(210,255,246,0.22);
     }
 
-    body.finalCard .progressDot.active {
-      background: rgba(222,255,246,0.9);
-      box-shadow:
-        0 0 18px rgba(205,255,238,0.2),
-        0 0 34px rgba(180,238,218,0.14);
-    }
-
-    body.finalCard #nextButton {
-      border-color: rgba(226,255,249,0.42);
-      background:
-        radial-gradient(circle at 50% 22%, rgba(255,255,255,0.42), transparent 34%),
-        radial-gradient(circle at 50% 58%, rgba(176,246,224,0.18), transparent 62%),
-        rgba(255,255,255,0.13);
-    }
-
     .infoOverlay {
       position: fixed;
       inset: 0;
@@ -1305,81 +1290,6 @@ body.pulse .ambient3 {
       }
     }
 
-    @media (max-width: 760px), (pointer: coarse) {
-      body::before {
-        inset: -120px 0 -260px;
-        background-size: 118% 118%, 100% 100%, 120% 86%, 100% 100%;
-        animation: none;
-      }
-
-      body::after {
-        inset: -120px 0 -260px;
-        opacity: 0.28;
-        mix-blend-mode: normal;
-        animation: none;
-      }
-
-      .flowCanvas {
-        top: -120px;
-        bottom: -260px;
-        height: calc(100% + 380px);
-        opacity: 0.64;
-        mix-blend-mode: normal;
-      }
-
-      .pageVignette {
-        inset: -120px 0 -260px;
-      }
-
-      .edgeFadeTop {
-        height: calc(env(safe-area-inset-top) + 126px);
-        min-height: 126px;
-      }
-
-      .edgeFadeBottom {
-        height: calc(env(safe-area-inset-bottom) + 158px);
-        min-height: 158px;
-      }
-
-      .ambient {
-        display: none;
-      }
-
-      .menuButton,
-      .infoPanel,
-      .arrowButton {
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-      }
-
-      .menuButton {
-        box-shadow:
-          0 10px 22px rgba(0,0,0,0.12),
-          inset 0 1px 1px rgba(255,255,255,0.1);
-      }
-
-      .arrowButton {
-        box-shadow:
-          0 14px 28px rgba(0,0,0,0.16),
-          0 0 26px rgba(169,236,226,0.1),
-          inset 0 1px 1px rgba(255,255,255,0.22),
-          inset 0 -14px 24px rgba(22,75,88,0.1);
-        animation: none;
-      }
-
-      .arrowButton::before,
-      .arrowButton::after {
-        animation: none;
-        opacity: 0.52;
-      }
-
-      .prevButton {
-        box-shadow:
-          0 8px 18px rgba(0,0,0,0.09),
-          inset 0 1px 1px rgba(255,255,255,0.08);
-      }
-    }
-
     @media (max-width: 420px) {
       .app {
         padding-left: 18px;
@@ -1408,6 +1318,11 @@ body.pulse .ambient3 {
         height: 46px;
         left: 78px;
         font-size: 1.34rem;
+      }
+
+      .arrowButton {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
       }
     }
   </style>
@@ -1612,7 +1527,6 @@ body.pulse .ambient3 {
         dot.className = dotIndex === index ? "progressDot active" : "progressDot";
         dotsContainer.appendChild(dot);
       });
-      document.body.classList.toggle("finalCard", index === messages.length - 1);
     };
 
     updateProgress();
@@ -1812,7 +1726,7 @@ body.pulse .ambient3 {
     let lastSandFrame = 0;
     const sandFrameInterval = prefersLeanMotion ? 1000 / 30 : 0;
 
-    const particles = Array.from({ length: prefersLeanMotion ? 720 : 3200 }, (_, particleIndex) => ({
+    const particles = Array.from({ length: prefersLeanMotion ? 960 : 3200 }, (_, particleIndex) => ({
       angle: (particleIndex * 2.39996) % (Math.PI * 2),
       ring: particleIndex % 8,
       offset: Math.sin(particleIndex * 12.9898) * 18,
@@ -1823,7 +1737,7 @@ body.pulse .ambient3 {
       bright: particleIndex % 6 === 0
     }));
 
-    const backgroundGrain = Array.from({ length: prefersLeanMotion ? 1100 : 9600 }, (_, grainIndex) => ({
+    const backgroundGrain = Array.from({ length: prefersLeanMotion ? 2200 : 9600 }, (_, grainIndex) => ({
       x: ((grainIndex * 0.61803398875) % 1),
       y: ((grainIndex * 0.754877666) % 1),
       size: 0.34 + (grainIndex % 7) * 0.115,
@@ -1884,16 +1798,13 @@ body.pulse .ambient3 {
             [246, 242, 220, 0.08],
             [164, 214, 197, 0.2]
           ];
-      const activeAuraColors = prefersLeanMotion
-        ? auraColors.slice(0, 3).map((color) => [color[0], color[1], color[2], color[3] * 0.72])
-        : auraColors;
 
       flowContext.clearRect(0, 0, canvasWidth, canvasHeight);
       flowContext.lineCap = "round";
       flowContext.save();
-      flowContext.globalCompositeOperation = prefersLeanMotion ? "source-over" : "lighter";
+      flowContext.globalCompositeOperation = "lighter";
 
-      activeAuraColors.forEach((color, colorIndex) => {
+      auraColors.forEach((color, colorIndex) => {
         const phase = elapsed * (0.085 + colorIndex * 0.014) + colorIndex * 1.66;
         const wideSide = Math.max(canvasWidth, canvasHeight);
         const orbitX =
@@ -1906,38 +1817,25 @@ body.pulse .ambient3 {
         const x = centerX + orbitX + pointerCurrent.x * minSide * 0.3;
         const y = centerY + orbitY + pointerCurrent.y * minSide * 0.26;
         const radius = minSide * (0.46 + colorIndex * 0.045) + wobble;
-        const softLayers = prefersLeanMotion
-          ? [
-              [0, 0, 1.2, 0.9, 0.42],
-              [
-                Math.sin(phase * 1.4) * radius * 0.08,
-                Math.cos(phase * 1.1) * radius * 0.06,
-                0.9,
-                0.66,
-                0.24
-              ]
-            ]
-          : [
-              [0, 0, 1.34, 0.92, 0.5],
-              [
-                Math.sin(phase * 1.4) * radius * 0.12,
-                Math.cos(phase * 1.1) * radius * 0.08,
-                1.02,
-                0.72,
-                0.34
-              ],
-              [
-                Math.cos(phase * 0.9) * radius * 0.16,
-                Math.sin(phase * 1.2) * radius * 0.11,
-                0.76,
-                0.58,
-                0.22
-              ]
-            ];
+        const softLayers = [
+          [0, 0, 1.34, 0.92, 0.5],
+          [
+            Math.sin(phase * 1.4) * radius * 0.12,
+            Math.cos(phase * 1.1) * radius * 0.08,
+            1.02,
+            0.72,
+            0.34
+          ],
+          [
+            Math.cos(phase * 0.9) * radius * 0.16,
+            Math.sin(phase * 1.2) * radius * 0.11,
+            0.76,
+            0.58,
+            0.22
+          ]
+        ];
 
-        flowContext.filter = prefersLeanMotion
-          ? "none"
-          : `blur(${Math.max(18, minSide * 0.035).toFixed(1)}px)`;
+        flowContext.filter = `blur(${Math.max(18, minSide * 0.035).toFixed(1)}px)`;
 
         softLayers.forEach((layer, layerIndex) => {
           const layerX = x + layer[0];
@@ -1970,19 +1868,16 @@ body.pulse .ambient3 {
       flowContext.filter = "none";
       flowContext.restore();
 
-      const ringCount = prefersLeanMotion ? 4 : 8;
-      const ringPoints = prefersLeanMotion ? 48 : 96;
-
-      for (let ringIndex = 0; ringIndex < ringCount; ringIndex += 1) {
-        const progress = ((elapsed * 0.018 + ringIndex / ringCount) % 1);
+      for (let ringIndex = 0; ringIndex < 8; ringIndex += 1) {
+        const progress = ((elapsed * 0.018 + ringIndex / 8) % 1);
         const radius = minSide * 0.12 + progress * maxRadius;
         const fade = Math.sin(progress * Math.PI) * 0.012;
         const driftX = Math.sin(elapsed * 0.12 + ringIndex * 1.7) * 4;
         const driftY = Math.cos(elapsed * 0.1 + ringIndex * 1.3) * 3;
 
         flowContext.beginPath();
-        for (let point = 0; point <= ringPoints; point += 1) {
-          const angle = point / ringPoints * Math.PI * 2;
+        for (let point = 0; point <= 96; point += 1) {
+          const angle = point / 96 * Math.PI * 2;
           const ripple =
             Math.sin(angle * 3 + elapsed * 0.17 + ringIndex) * 2.2 +
             Math.sin(angle * 5 - elapsed * 0.11 + ringIndex * 0.7) * 1.2;
