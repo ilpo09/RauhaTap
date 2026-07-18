@@ -3,6 +3,6 @@
   "short_name": "Valwen",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#203b42",
-  "theme_color": "#203b42"
+  "background_color": "#172f3a",
+  "theme_color": "#172f3a"
 }
