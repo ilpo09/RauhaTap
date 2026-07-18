@@ -249,6 +249,7 @@
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
+      transform-origin: center center;
     }
 
     .cardFilmGlow {
@@ -1206,8 +1207,8 @@ body.pulse .ambient3 {
       .app {
         padding-left: 18px;
         padding-right: 18px;
-        padding-bottom: calc(env(safe-area-inset-bottom) + 38px);
-        transform: translateY(clamp(24px, 5.5dvh, 48px));
+        padding-bottom: calc(env(safe-area-inset-bottom) + 12px);
+        transform: translateY(clamp(38px, 7.8dvh, 72px)) scale(1.035);
       }
 
       .card {
