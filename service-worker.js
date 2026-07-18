@@ -1,11 +1,10 @@
-const CACHE_NAME = "rauhatap-v2";
+const CACHE_NAME = "valwen-v1";
 
 const FILES = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./service-worker.js",
-  "./rauhatap-circle-three-waves-small-cutout.svg"
+  "./service-worker.js"
 ];
 
 self.addEventListener("install", event => {

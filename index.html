@@ -6,11 +6,10 @@
   <meta name="theme-color" content="#17364a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="RauhaTap">
-  <link rel="icon" href="rauhatap-circle-three-waves-small-cutout.svg" type="image/svg+xml">
+  <meta name="apple-mobile-web-app-title" content="Valwen">
   <link rel="manifest" href="manifest.json">
 
-  <title>RauhaTap</title>
+  <title>Valwen</title>
 
   <style>
     html, body {
@@ -24,7 +23,9 @@
 
     body {
       min-height: 100dvh;
-      font-family: Inter, ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+      font-family: Inter, "SF Pro Display", "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
       color: white;
       --theme-base: linear-gradient(145deg, #243947 0%, #5b7876 48%, #9ea990 100%);
       --theme-center: radial-gradient(circle at 50% 50%, rgba(190,221,207,0.5), rgba(118,170,163,0.32) 34%, rgba(82,113,125,0.16) 58%, transparent 76%);
@@ -52,7 +53,18 @@
     }
 
     body::before {
-      display: none;
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        url("data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.28' numOctaves='4' seed='43' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23grain)' opacity='0.96'/%3E%3C/svg%3E"),
+        radial-gradient(circle at 50% 46%, rgba(255,255,255,0.06), transparent 58%);
+      background-size: 180px 180px, 100% 100%;
+      mix-blend-mode: soft-light;
+      opacity: 0.48;
+      z-index: 3;
+      animation: pageGrainDrift 1.4s steps(2, end) infinite;
     }
 
     .flowCanvas {
@@ -78,10 +90,10 @@
     }
 
     body[data-theme="day"] {
-      --theme-base: linear-gradient(145deg, #49696d 0%, #788f86 52%, #979b82 100%);
-      --theme-center: radial-gradient(circle at 50% 50%, rgba(204,211,181,0.27), rgba(126,171,160,0.23) 36%, rgba(72,114,122,0.13) 60%, transparent 78%);
-      --theme-glow: radial-gradient(circle at 50% 52%, rgba(232,226,194,0.075), transparent 44%);
-      --theme-vignette: radial-gradient(circle at center, transparent 29%, rgba(55,88,96,0.34) 62%, rgba(28,52,62,0.63) 100%);
+      --theme-base: linear-gradient(145deg, #54787e 0%, #7fa095 52%, #aebcae 100%);
+      --theme-center: radial-gradient(circle at 50% 50%, rgba(247,255,251,0.25), rgba(184,225,214,0.2) 34%, rgba(92,137,148,0.15) 61%, transparent 80%);
+      --theme-glow: radial-gradient(circle at 50% 52%, rgba(255,255,250,0.105), transparent 46%);
+      --theme-vignette: radial-gradient(circle at center, transparent 28%, rgba(54,91,101,0.34) 64%, rgba(25,54,66,0.62) 100%);
       --grain-opacity: 0.23;
     }
 
@@ -109,7 +121,7 @@
       height: 420px;
       background: #8fd3ff;
       --ambient-opacity: 0.22;
-      --pulse-peak-opacity: 0.28;
+      --pulse-peak-opacity: 0.24;
       top: -120px;
       left: -100px;
       animation: floatOne 26s ease-in-out infinite alternate;
@@ -120,7 +132,7 @@
       height: 380px;
       background: #9effd6;
       --ambient-opacity: 0.22;
-      --pulse-peak-opacity: 0.27;
+      --pulse-peak-opacity: 0.235;
       bottom: -140px;
       right: -120px;
       animation: floatTwo 32s ease-in-out infinite alternate;
@@ -133,7 +145,7 @@
       top: 40%;
       left: 50%;
       --ambient-opacity: 0.08;
-      --pulse-peak-opacity: 0.12;
+      --pulse-peak-opacity: 0.105;
       animation: pulseGlow 18s ease-in-out infinite;
     }
 
@@ -152,24 +164,7 @@
     }
 
     .cardFilmGlow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: min(150vw, 760px);
-      height: min(116vw, 590px);
-      max-height: 72vh;
-      pointer-events: none;
-      transform: translate(-50%, -57%);
-      opacity: 0.56;
-      mix-blend-mode: soft-light;
-      background:
-        url("data:image/svg+xml,%3Csvg width='360' height='360' viewBox='0 0 360 360' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='film'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='4' seed='19' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='360' height='360' filter='url(%23film)' opacity='0.72'/%3E%3C/svg%3E"),
-        radial-gradient(ellipse at center, rgba(247,250,222,0.28), rgba(178,221,205,0.12) 42%, transparent 72%);
-      background-size: 360px 360px, 100% 100%;
-      -webkit-mask-image: radial-gradient(ellipse at center, black 0 30%, rgba(0,0,0,0.76) 48%, transparent 75%);
-      mask-image: radial-gradient(ellipse at center, black 0 30%, rgba(0,0,0,0.76) 48%, transparent 75%);
-      animation: filmGrainFlicker 780ms steps(2, end) infinite;
-      z-index: 0;
+      display: none;
     }
 
     .card,
@@ -191,7 +186,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 3px;
+      flex-direction: column;
+      gap: 4px;
       cursor: pointer;
       z-index: 5;
       backdrop-filter: blur(18px);
@@ -206,8 +202,8 @@
     }
 
     .menuButton span {
-      width: 3px;
-      height: 17px;
+      width: 17px;
+      height: 2px;
       border-radius: 999px;
       background: rgba(255,255,255,0.78);
     }
@@ -221,15 +217,14 @@
     .brandLogo {
       position: fixed;
       top: max(18px, env(safe-area-inset-top));
-      left: 74px;
+      left: 78px;
       height: 46px;
       z-index: 5;
       display: flex;
       align-items: center;
-      gap: 3px;
       color: white;
-      font-size: 1.55rem;
-      font-weight: 720;
+      font-size: 1.48rem;
+      font-weight: 680;
       line-height: 1;
       letter-spacing: 0;
       text-decoration: none;
@@ -238,69 +233,30 @@
       animation: logoReveal 0.75s ease-out both;
     }
 
-    .brandMark {
-      width: 46px;
-      height: 46px;
-      display: block;
-      flex: 0 0 auto;
-      overflow: visible;
-      color: #143447;
-    }
-
     .card {
       position: relative;
-      width: 100%;
-      height: 320px;
-      padding: 42px;
-      border-radius: 38px;
-      background:
-        radial-gradient(ellipse at 50% 44%, rgba(219,241,224,0.12), transparent 58%),
-        linear-gradient(145deg, rgba(255,255,255,0.1), rgba(15,43,51,0.16)),
-        rgba(15,42,50,0.2);
-      border: 1px solid rgba(238,255,247,0.2);
+      width: min(82vw, 392px);
+      aspect-ratio: 1;
+      min-height: 300px;
+      padding: 48px;
+      border-radius: 32px;
+      background: transparent;
+      border: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
-      overflow: hidden;
-      backdrop-filter: blur(28px) saturate(0.96);
-      -webkit-backdrop-filter: blur(28px) saturate(0.96);
-      box-shadow:
-        0 30px 82px rgba(8,26,34,0.25),
-        inset 0 1px 0 rgba(255,255,255,0.16),
-        inset 1px 0 0 rgba(203,245,232,0.07),
-        inset -1px -1px 0 rgba(9,35,44,0.18),
-        inset 0 0 74px rgba(208,244,226,0.055);
-      animation: cardLightBreath 12s ease-in-out infinite;
+      overflow: visible;
+      box-shadow: none;
+      animation: none;
     }
 
     .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background:
-        url("data:image/svg+xml,%3Csvg width='280' height='280' viewBox='0 0 280 280' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='cardFilm'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='4' seed='31' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23cardFilm)' opacity='0.62'/%3E%3C/svg%3E"),
-        radial-gradient(ellipse at center, rgba(255,255,255,0.08), transparent 68%);
-      background-size: 280px 280px, 100% 100%;
-      opacity: 0.16;
-      mix-blend-mode: soft-light;
-      pointer-events: none;
-      animation: cardFilmFlicker 1.3s steps(2, end) infinite;
+      display: none;
     }
 
     .card::after {
-      content: "";
-      position: absolute;
-      top: -38%;
-      left: -54%;
-      width: 58%;
-      height: 176%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.055), transparent);
-      transform: rotate(18deg);
-      opacity: 0.34;
-      pointer-events: none;
-      animation: glassShimmer 20s ease-in-out infinite;
+      display: none;
     }
 
     #message {
@@ -308,32 +264,46 @@
       color: white !important;
       -webkit-text-fill-color: white;
       opacity: 1 !important;
-      font-size: clamp(1.9rem, 7vw, 2.55rem);
-      font-weight: 650;
-      line-height: 1.35;
+      font-size: clamp(1.66rem, 5.7vw, 2.22rem);
+      font-weight: 610;
+      line-height: 1.42;
       letter-spacing: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 100%;
+      max-width: 12.8em;
       height: 100%;
       text-align: center;
+      font-variation-settings: "wght" 610;
       transition:
-        opacity 0.45s ease,
-        transform 0.45s ease;
+        opacity 0.62s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.62s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.62s cubic-bezier(0.22, 1, 0.36, 1);
       text-wrap: balance;
-      text-shadow: 0 2px 24px rgba(0,0,0,0.16);
+      text-shadow:
+        0 2px 22px rgba(0,0,0,0.18),
+        0 0 42px rgba(220,255,243,0.07);
       z-index: 1;
+    }
+
+    body[data-theme="day"] #message {
+      text-shadow:
+        0 2px 8px rgba(18,44,52,0.22),
+        0 8px 28px rgba(18,44,52,0.2),
+        0 0 36px rgba(220,255,245,0.08);
     }
 
     .fadeOut {
       opacity: 0 !important;
-      transform: translateY(6px);
+      transform: translateY(10px) scale(0.992);
+      filter: blur(2px);
     }
 
     .fadeIn {
       opacity: 1 !important;
       transform: translateY(0);
+      filter: blur(0);
     }
 
     .arrowButton {
@@ -357,10 +327,11 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       transition:
-        transform 0.18s ease,
-        background 0.18s ease,
-        border-color 0.18s ease,
-        opacity 0.18s ease;
+        transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.32s ease,
+        border-color 0.32s ease,
+        opacity 0.32s ease,
+        filter 0.32s ease;
       box-shadow:
         0 20px 46px rgba(0,0,0,0.2),
         0 0 54px rgba(169,236,226,0.14),
@@ -432,8 +403,8 @@
     }
 
     .arrowButton:active {
-      transform: scale(0.94);
-      opacity: 0.82;
+      transform: scale(0.975);
+      opacity: 0.9;
       border-color: rgba(255,255,255,0.32);
       background:
         radial-gradient(circle at 50% 22%, rgba(255,255,255,0.42), transparent 34%),
@@ -442,7 +413,14 @@
     }
 
     .arrowButton.ripple::after {
-      animation: calmRipple 680ms ease-out;
+      animation: calmRipple 1080ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .arrowButton:disabled {
+      cursor: default;
+      opacity: 0.64;
+      filter: saturate(0.88);
+      transform: scale(0.985);
     }
 
     .progressDots {
@@ -580,6 +558,38 @@
       cursor: pointer;
     }
 
+    .textSaveStatus {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 10px;
+      color: rgba(229,255,247,0.92);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      opacity: 0;
+      transform: translateY(-3px);
+      transition:
+        opacity 0.22s ease,
+        transform 0.22s ease;
+    }
+
+    .textSaveStatus.visible {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .textSaveStatus svg {
+      width: 18px;
+      height: 18px;
+      padding: 3px;
+      border-radius: 999px;
+      background: rgba(222,255,246,0.12);
+      box-shadow: 0 0 18px rgba(180,255,230,0.14);
+    }
+
     .textEditor {
       display: none;
       margin-top: 14px;
@@ -595,6 +605,13 @@
       max-height: min(42vh, 340px);
       overflow: auto;
       padding-right: 4px;
+    }
+
+    .textFieldRow {
+      display: grid;
+      grid-template-columns: 1fr 36px;
+      gap: 8px;
+      align-items: stretch;
     }
 
     .textField {
@@ -616,6 +633,58 @@
     .textField:focus {
       border-color: rgba(226,255,249,0.34);
       background: rgba(255,255,255,0.09);
+    }
+
+    .deleteTextButton {
+      min-width: 0;
+      width: 36px;
+      border: 1px solid rgba(255,205,190,0.18);
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255,210,190,0.06), transparent 42%),
+        rgba(80,28,24,0.08);
+      color: rgba(255,224,214,0.72);
+      font: inherit;
+      font-size: 1.15rem;
+      line-height: 1;
+      cursor: pointer;
+      transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        opacity 0.18s ease;
+    }
+
+    .deleteTextButton:active {
+      border-color: rgba(255,205,190,0.32);
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255,210,190,0.12), transparent 42%),
+        rgba(96,34,28,0.14);
+      color: rgba(255,232,224,0.9);
+    }
+
+    .deleteTextButton:disabled {
+      cursor: default;
+      opacity: 0.28;
+    }
+
+    .addTextButton {
+      width: 100%;
+      height: 38px;
+      margin-top: 10px;
+      border: 1px solid rgba(226,255,249,0.16);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.075);
+      color: rgba(229,255,247,0.88);
+      font: inherit;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .addTextButton:active {
+      border-color: rgba(226,255,249,0.26);
+      background: rgba(255,255,255,0.12);
     }
 
     .editorActions {
@@ -684,25 +753,132 @@
       }
     }
 
-    @keyframes cardLightBreath {
-      0%, 100% {
-        filter: brightness(0.96);
-        box-shadow:
-          0 30px 82px rgba(8,26,34,0.25),
-          inset 0 1px 0 rgba(255,255,255,0.14),
-          inset 1px 0 0 rgba(203,245,232,0.06),
-          inset -1px -1px 0 rgba(9,35,44,0.18),
-          inset 0 0 68px rgba(208,244,226,0.04);
+    @keyframes pageGrainDrift {
+      0% {
+        background-position: 0 0, center;
+        opacity: 0.41;
+        filter: contrast(1.11);
+      }
+
+      25% {
+        background-position: 11px -7px, center;
+        opacity: 0.5;
+        filter: contrast(1.19);
       }
 
       50% {
-        filter: brightness(1.04);
+        background-position: -8px 9px, center;
+        opacity: 0.43;
+        filter: contrast(1.14);
+      }
+
+      75% {
+        background-position: 6px 5px, center;
+        opacity: 0.53;
+        filter: contrast(1.22);
+      }
+
+      100% {
+        background-position: -4px -8px, center;
+        opacity: 0.42;
+        filter: contrast(1.12);
+      }
+    }
+
+    @keyframes cardLightBreath {
+      0%, 100% {
+        filter: brightness(0.985);
         box-shadow:
-          0 32px 88px rgba(8,26,34,0.23),
-          inset 0 1px 0 rgba(255,255,255,0.2),
-          inset 1px 0 0 rgba(203,245,232,0.09),
-          inset -1px -1px 0 rgba(9,35,44,0.16),
-          inset 0 0 82px rgba(208,244,226,0.075);
+          0 34px 128px rgba(8,26,34,0.12),
+          0 0 128px rgba(188,235,218,0.045),
+          inset 0 1px 0 rgba(255,255,255,0.055),
+          inset 12px 8px 38px rgba(255,255,255,0.022),
+          inset -18px -24px 64px rgba(9,35,44,0.08),
+          inset 0 0 94px rgba(208,244,226,0.028);
+      }
+
+      50% {
+        filter: brightness(1.012);
+        box-shadow:
+          0 38px 136px rgba(8,26,34,0.1),
+          0 0 146px rgba(188,235,218,0.06),
+          inset 0 1px 0 rgba(255,255,255,0.09),
+          inset 10px 7px 42px rgba(255,255,255,0.026),
+          inset -16px -22px 66px rgba(9,35,44,0.07),
+          inset 0 0 108px rgba(208,244,226,0.04);
+      }
+    }
+
+    @keyframes surfaceGlowBreath {
+      0%, 100% {
+        opacity: 0.42;
+        transform: translate(-50%, -53%) scale(0.985);
+      }
+
+      50% {
+        opacity: 0.54;
+        transform: translate(-50%, -53%) scale(1.015);
+      }
+    }
+
+    @keyframes surfaceRingBreath {
+      0%, 100% {
+        opacity: 0.2;
+        transform: scale(0.99) rotate(-0.4deg);
+      }
+
+      50% {
+        opacity: 0.32;
+        transform: scale(1.015) rotate(0.6deg);
+      }
+    }
+
+    @keyframes organicSurface {
+      0% {
+        border-radius: 48% 52% 51% 49% / 46% 50% 54% 50%;
+      }
+
+      50% {
+        border-radius: 51% 49% 47% 53% / 50% 46% 52% 54%;
+      }
+
+      100% {
+        border-radius: 47% 53% 50% 50% / 53% 51% 47% 49%;
+      }
+    }
+
+    @keyframes waterSurfaceTap {
+      0% {
+        opacity: 0.22;
+        transform: scale(0.94) rotate(-0.5deg);
+        background:
+          radial-gradient(ellipse at 46% 50%, transparent 50%, rgba(232,255,248,0.034) 62%, rgba(232,255,248,0.01) 74%, transparent 86%);
+        box-shadow:
+          0 0 30px rgba(232,255,248,0.026),
+          0 0 74px rgba(232,255,248,0.012),
+          inset 0 0 56px rgba(255,255,255,0.035);
+      }
+
+      48% {
+        opacity: 0.13;
+        transform: scale(1.035) rotate(0.8deg);
+        background:
+          radial-gradient(ellipse at 54% 49%, transparent 54%, rgba(232,255,248,0.024) 67%, rgba(232,255,248,0.007) 80%, transparent 90%);
+        box-shadow:
+          0 0 46px rgba(232,255,248,0.018),
+          0 0 96px rgba(232,255,248,0.008),
+          inset 0 0 56px rgba(255,255,255,0.026);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.13) rotate(0.2deg);
+        background:
+          radial-gradient(ellipse at 52% 52%, transparent 58%, rgba(232,255,248,0) 72%, transparent 90%);
+        box-shadow:
+          0 0 62px rgba(232,255,248,0),
+          0 0 122px rgba(232,255,248,0),
+          inset 0 0 56px rgba(255,255,255,0.01);
       }
     }
 
@@ -793,13 +969,17 @@
 
     @keyframes calmRipple {
       0% {
-        opacity: 0.36;
-        transform: scale(0.86);
+        opacity: 0.22;
+        transform: scale(0.92);
+      }
+
+      54% {
+        opacity: 0.12;
       }
 
       100% {
         opacity: 0;
-        transform: scale(1.48);
+        transform: scale(1.64);
       }
     }
 
@@ -860,19 +1040,19 @@
 body.pulse .ambient1 {
   animation:
     floatOne 26s ease-in-out infinite alternate,
-    auroraPulse 900ms ease-out;
+    auroraPulse 1400ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 body.pulse .ambient2 {
   animation:
     floatTwo 32s ease-in-out infinite alternate,
-    auroraPulse 1100ms ease-out;
+    auroraPulse 1600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 body.pulse .ambient3 {
   animation:
     pulseGlow 18s ease-in-out infinite,
-    auroraPulse 1200ms ease-out;
+    auroraPulse 1800ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes auroraPulse {
@@ -882,8 +1062,8 @@ body.pulse .ambient3 {
   }
 
   45% {
-    opacity: var(--pulse-peak-opacity, 0.28);
-    filter: blur(96px);
+    opacity: var(--pulse-peak-opacity, 0.24);
+    filter: blur(102px);
   }
 
   100% {
@@ -913,10 +1093,7 @@ body.pulse .ambient3 {
       }
 
       .card {
-        background:
-          radial-gradient(ellipse at 50% 44%, rgba(185,226,215,0.1), transparent 58%),
-          linear-gradient(145deg, rgba(255,255,255,0.085), rgba(9,31,40,0.19)),
-          rgba(9,31,40,0.23);
+        background: transparent;
       }
     }
 
@@ -945,23 +1122,25 @@ body.pulse .ambient3 {
       }
 
       .card {
-        height: 300px;
-        padding: 34px 28px;
-        border-radius: 32px;
+        width: min(84vw, 340px);
+        min-height: 0;
+        padding: 38px 32px;
       }
 
       .card::before {
-        border-radius: 24px;
+        inset: 5%;
       }
 
       #message {
-        font-size: clamp(1.7rem, 8vw, 2.28rem);
+        font-size: clamp(1.5rem, 6.6vw, 1.94rem);
+        line-height: 1.44;
+        max-width: 12.2em;
       }
 
       .brandLogo {
         height: 46px;
-        left: 72px;
-        font-size: 1.42rem;
+        left: 78px;
+        font-size: 1.34rem;
       }
     }
   </style>
@@ -978,14 +1157,13 @@ body.pulse .ambient3 {
     <span></span>
     <span></span>
   </button>
-  <div class="brandLogo" aria-label="RauhaTap">
-    <img class="brandMark" src="rauhatap-circle-three-waves-small-cutout.svg" alt="">
-    <span>RauhaTap</span>
+  <div class="brandLogo" aria-label="Valwen">
+    <span>Valwen</span>
   </div>
 
   <div id="infoOverlay" class="infoOverlay" aria-hidden="true">
     <div class="infoPanel" role="dialog" aria-modal="false" aria-label="Aloitusnäytölle tallentaminen">
-      Voit tallentaa tämän aloitusnäytölle, jotta Apukortti on nopeasti saatavilla myös ilman nettiä.
+      Voit tallentaa tämän aloitusnäytölle, jotta Valwen on nopeasti saatavilla myös ilman nettiä.
       <div class="themeSwitch" aria-label="Väriteema">
         <button id="dayThemeButton" class="themeOption" type="button" aria-pressed="false">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1003,8 +1181,15 @@ body.pulse .ambient3 {
       <button id="textEditToggle" class="textEditToggle" type="button" aria-expanded="false" aria-controls="textEditor">
         Muokkaa tekstejä
       </button>
+      <div id="textSaveStatus" class="textSaveStatus" role="status" aria-live="polite" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12.5L10 17L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Tallennettu
+      </div>
       <div id="textEditor" class="textEditor">
         <div id="textFields" class="textFields"></div>
+        <button id="addTextButton" class="addTextButton" type="button">Lisää kortti</button>
         <div class="editorActions">
           <button id="saveTextsButton" class="editorButton" type="button">Tallenna</button>
           <button id="resetTextsButton" class="editorButton secondary" type="button">Palauta</button>
@@ -1044,6 +1229,7 @@ body.pulse .ambient3 {
 
     let messages = [...defaultMessages];
     let index = 0;
+    let isTransitioning = false;
 
     const message = document.getElementById("message");
     const button = document.getElementById("nextButton");
@@ -1057,14 +1243,24 @@ body.pulse .ambient3 {
     const textEditToggle = document.getElementById("textEditToggle");
     const textEditor = document.getElementById("textEditor");
     const textFields = document.getElementById("textFields");
+    const textSaveStatus = document.getElementById("textSaveStatus");
+    const addTextButton = document.getElementById("addTextButton");
     const saveTextsButton = document.getElementById("saveTextsButton");
     const resetTextsButton = document.getElementById("resetTextsButton");
+    const storageKeys = {
+      messages: "valwen-messages",
+      legacyMessages: "rauhatap-messages",
+      theme: "valwen-theme",
+      legacyTheme: "rauhatap-theme"
+    };
 
     const loadSavedMessages = () => {
       try {
-        const savedMessages = JSON.parse(localStorage.getItem("rauhatap-messages") || "null");
+        const storedMessages = localStorage.getItem(storageKeys.messages) || localStorage.getItem(storageKeys.legacyMessages);
+        const savedMessages = JSON.parse(storedMessages || "null");
         if (Array.isArray(savedMessages) && savedMessages.some((text) => String(text).trim())) {
           messages = savedMessages.map((text) => String(text).trim()).filter(Boolean);
+          localStorage.setItem(storageKeys.messages, JSON.stringify(messages));
         }
       } catch (error) {
         messages = [...defaultMessages];
@@ -1075,25 +1271,51 @@ body.pulse .ambient3 {
       textFields.innerHTML = "";
 
       messages.forEach((text, textIndex) => {
+        const row = document.createElement("div");
+        row.className = "textFieldRow";
+
         const field = document.createElement("textarea");
         field.className = "textField";
         field.value = text;
         field.rows = 2;
         field.setAttribute("aria-label", `Kortti ${textIndex + 1}`);
-        textFields.appendChild(field);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "deleteTextButton";
+        deleteButton.type = "button";
+        deleteButton.textContent = "×";
+        deleteButton.disabled = messages.length <= 1;
+        deleteButton.setAttribute("aria-label", `Poista kortti ${textIndex + 1}`);
+        deleteButton.addEventListener("click", () => {
+          if (messages.length <= 1) {
+            return;
+          }
+
+          messages = Array.from(textFields.querySelectorAll(".textField"))
+            .map((field) => field.value);
+          messages.splice(textIndex, 1);
+          index = Math.min(index, messages.length - 1);
+          renderTextFields();
+          updateProgress();
+          refreshCurrentCard();
+        });
+
+        row.appendChild(field);
+        row.appendChild(deleteButton);
+        textFields.appendChild(row);
       });
     };
 
     const setTheme = (theme) => {
       document.body.dataset.theme = theme;
-      localStorage.setItem("rauhatap-theme", theme);
+      localStorage.setItem(storageKeys.theme, theme);
       dayThemeButton.classList.toggle("active", theme === "day");
       nightThemeButton.classList.toggle("active", theme === "night");
       dayThemeButton.setAttribute("aria-pressed", String(theme === "day"));
       nightThemeButton.setAttribute("aria-pressed", String(theme === "night"));
     };
 
-    const savedTheme = localStorage.getItem("rauhatap-theme");
+    const savedTheme = localStorage.getItem(storageKeys.theme) || localStorage.getItem(storageKeys.legacyTheme);
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     setTheme(savedTheme || (prefersDark ? "night" : "day"));
 
@@ -1114,7 +1336,7 @@ body.pulse .ambient3 {
 
     const refreshCurrentCard = () => {
       index = Math.min(index, messages.length - 1);
-      message.textContent = messages[index];
+      message.textContent = messages[index] || "";
       dotsContainer.querySelectorAll(".progressDot").forEach((dot, dotIndex) => {
         dot.classList.toggle("active", dotIndex === index);
       });
@@ -1138,6 +1360,24 @@ body.pulse .ambient3 {
     textEditToggle.addEventListener("click", () => {
       const isOpen = textEditor.classList.toggle("open");
       textEditToggle.setAttribute("aria-expanded", String(isOpen));
+      if (isOpen) {
+        textSaveStatus.classList.remove("visible");
+        textSaveStatus.setAttribute("aria-hidden", "true");
+      }
+    });
+
+    addTextButton.addEventListener("click", () => {
+      messages = Array.from(textFields.querySelectorAll(".textField"))
+        .map((field) => field.value);
+      messages.push("");
+      renderTextFields();
+      updateProgress();
+
+      const fields = textFields.querySelectorAll(".textField");
+      const newField = fields[fields.length - 1];
+      if (newField) {
+        newField.focus();
+      }
     });
 
     saveTextsButton.addEventListener("click", () => {
@@ -1150,10 +1390,14 @@ body.pulse .ambient3 {
       }
 
       messages = editedMessages;
-      localStorage.setItem("rauhatap-messages", JSON.stringify(messages));
+      localStorage.setItem(storageKeys.messages, JSON.stringify(messages));
       renderTextFields();
       updateProgress();
       refreshCurrentCard();
+      textEditor.classList.remove("open");
+      textEditToggle.setAttribute("aria-expanded", "false");
+      textSaveStatus.classList.add("visible");
+      textSaveStatus.setAttribute("aria-hidden", "false");
     });
 
     resetTextsButton.addEventListener("click", () => {
@@ -1165,7 +1409,8 @@ body.pulse .ambient3 {
 
       messages = [...defaultMessages];
       index = 0;
-      localStorage.removeItem("rauhatap-messages");
+      localStorage.removeItem(storageKeys.messages);
+      localStorage.removeItem(storageKeys.legacyMessages);
       renderTextFields();
       updateProgress();
       refreshCurrentCard();
@@ -1184,6 +1429,13 @@ body.pulse .ambient3 {
     });
 
     const changeCard = (direction) => {
+      if (isTransitioning) {
+        return;
+      }
+
+      isTransitioning = true;
+      button.disabled = true;
+      prevButton.disabled = true;
       message.classList.remove("fadeIn");
       message.classList.add("fadeOut");
 
@@ -1197,7 +1449,13 @@ body.pulse .ambient3 {
         requestAnimationFrame(() => {
           message.classList.add("fadeIn");
         });
-      }, 280);
+      }, 420);
+
+      setTimeout(() => {
+        isTransitioning = false;
+        button.disabled = false;
+        prevButton.disabled = false;
+      }, 960);
     };
 
     button.addEventListener("click", () => {
@@ -1212,7 +1470,7 @@ body.pulse .ambient3 {
       setTimeout(() => {
         document.body.classList.remove("pulse");
         button.classList.remove("ripple");
-      }, 1200);
+      }, 1800);
 
       if ("vibrate" in navigator) {
         navigator.vibrate(20);
@@ -1230,7 +1488,7 @@ body.pulse .ambient3 {
 
       setTimeout(() => {
         prevButton.classList.remove("ripple");
-      }, 700);
+      }, 1100);
 
       if ("vibrate" in navigator) {
         navigator.vibrate(12);
@@ -1261,11 +1519,11 @@ body.pulse .ambient3 {
       bright: particleIndex % 6 === 0
     }));
 
-    const backgroundGrain = Array.from({ length: 3800 }, (_, grainIndex) => ({
+    const backgroundGrain = Array.from({ length: 9600 }, (_, grainIndex) => ({
       x: ((grainIndex * 0.61803398875) % 1),
       y: ((grainIndex * 0.754877666) % 1),
-      size: 0.26 + (grainIndex % 7) * 0.09,
-      alpha: 0.022 + (grainIndex % 9) * 0.006,
+      size: 0.34 + (grainIndex % 7) * 0.115,
+      alpha: 0.04 + (grainIndex % 9) * 0.009,
       phase: grainIndex * 0.137,
       dark: grainIndex % 4 === 0
     }));
@@ -1304,11 +1562,92 @@ body.pulse .ambient3 {
       const centerX = canvasWidth * 0.5 + pointerCurrent.x * 11;
       const centerY = canvasHeight * 0.5 + pointerCurrent.y * 9;
       const isNight = document.body.dataset.theme === "night";
-      const ringColor = isNight ? "190,242,226" : "245,246,218";
-      const grainColor = isNight ? "174,237,220" : "255,249,220";
+      const ringColor = isNight ? "190,242,226" : "232,249,244";
+      const grainColor = isNight ? "174,237,220" : "232,250,244";
+      const auraColors = isNight
+        ? [
+            [95, 238, 218, 0.42],
+            [180, 224, 108, 0.28],
+            [90, 152, 238, 0.28],
+            [244, 214, 142, 0.2],
+            [126, 224, 182, 0.24]
+          ]
+        : [
+            [238, 252, 247, 0.34],
+            [189, 229, 218, 0.28],
+            [126, 181, 198, 0.22],
+            [246, 242, 220, 0.08],
+            [164, 214, 197, 0.2]
+          ];
 
       flowContext.clearRect(0, 0, canvasWidth, canvasHeight);
       flowContext.lineCap = "round";
+      flowContext.save();
+      flowContext.globalCompositeOperation = "lighter";
+
+      auraColors.forEach((color, colorIndex) => {
+        const phase = elapsed * (0.085 + colorIndex * 0.014) + colorIndex * 1.66;
+        const wideSide = Math.max(canvasWidth, canvasHeight);
+        const orbitX =
+          Math.sin(phase) * minSide * (0.2 + colorIndex * 0.026) +
+          Math.sin(phase * 0.37 + colorIndex) * wideSide * 0.035;
+        const orbitY =
+          Math.cos(phase * 0.73 + colorIndex) * minSide * (0.15 + colorIndex * 0.018) +
+          Math.sin(phase * 0.52 - colorIndex) * minSide * 0.04;
+        const wobble = Math.sin(elapsed * 0.11 + colorIndex * 2.1) * minSide * 0.035;
+        const x = centerX + orbitX + pointerCurrent.x * minSide * 0.3;
+        const y = centerY + orbitY + pointerCurrent.y * minSide * 0.26;
+        const radius = minSide * (0.46 + colorIndex * 0.045) + wobble;
+        const softLayers = [
+          [0, 0, 1.34, 0.92, 0.5],
+          [
+            Math.sin(phase * 1.4) * radius * 0.12,
+            Math.cos(phase * 1.1) * radius * 0.08,
+            1.02,
+            0.72,
+            0.34
+          ],
+          [
+            Math.cos(phase * 0.9) * radius * 0.16,
+            Math.sin(phase * 1.2) * radius * 0.11,
+            0.76,
+            0.58,
+            0.22
+          ]
+        ];
+
+        flowContext.filter = `blur(${Math.max(18, minSide * 0.035).toFixed(1)}px)`;
+
+        softLayers.forEach((layer, layerIndex) => {
+          const layerX = x + layer[0];
+          const layerY = y + layer[1];
+          const layerRadius = radius * (1.08 + layerIndex * 0.14);
+          const layerAlpha = color[3] * layer[4];
+          const gradient = flowContext.createRadialGradient(layerX, layerY, 0, layerX, layerY, layerRadius);
+
+          gradient.addColorStop(0, `rgba(${color[0]},${color[1]},${color[2]},${layerAlpha})`);
+          gradient.addColorStop(0.26, `rgba(${color[0]},${color[1]},${color[2]},${layerAlpha * 0.58})`);
+          gradient.addColorStop(0.58, `rgba(${color[0]},${color[1]},${color[2]},${layerAlpha * 0.22})`);
+          gradient.addColorStop(0.86, `rgba(${color[0]},${color[1]},${color[2]},${layerAlpha * 0.055})`);
+          gradient.addColorStop(1, `rgba(${color[0]},${color[1]},${color[2]},0)`);
+
+          flowContext.fillStyle = gradient;
+          flowContext.beginPath();
+          flowContext.ellipse(
+            layerX,
+            layerY,
+            layerRadius * layer[2] * (1.16 + Math.sin(phase * 0.7 + layerIndex) * 0.12),
+            layerRadius * layer[3] * (0.92 + Math.cos(phase * 0.9 + layerIndex) * 0.11),
+            phase * (0.3 + layerIndex * 0.08),
+            0,
+            Math.PI * 2
+          );
+          flowContext.fill();
+        });
+      });
+
+      flowContext.filter = "none";
+      flowContext.restore();
 
       for (let ringIndex = 0; ringIndex < 8; ringIndex += 1) {
         const progress = ((elapsed * 0.018 + ringIndex / 8) % 1);
@@ -1364,30 +1703,32 @@ body.pulse .ambient3 {
       const mask = flowContext.createRadialGradient(
         centerX,
         centerY,
-        minSide * 0.16,
+        minSide * 0.12,
         centerX,
         centerY,
-        maxRadius * 1.02
+        maxRadius * 1.34
       );
       mask.addColorStop(0, "rgba(0,0,0,1)");
-      mask.addColorStop(0.64, "rgba(0,0,0,0.82)");
+      mask.addColorStop(0.5, "rgba(0,0,0,0.95)");
+      mask.addColorStop(0.74, "rgba(0,0,0,0.58)");
+      mask.addColorStop(0.9, "rgba(0,0,0,0.18)");
       mask.addColorStop(1, "rgba(0,0,0,0)");
       flowContext.fillStyle = mask;
       flowContext.fillRect(0, 0, canvasWidth, canvasHeight);
       flowContext.globalCompositeOperation = "source-over";
 
       backgroundGrain.forEach((grain) => {
-        const driftX = Math.sin(elapsed * 0.08 + grain.phase) * 2.4;
-        const driftY = Math.cos(elapsed * 0.065 + grain.phase * 0.7) * 2;
-        const shimmer = 0.62 + Math.sin(elapsed * 0.11 + grain.phase) * 0.24;
+        const driftX = Math.sin(elapsed * 0.1 + grain.phase) * 2.8;
+        const driftY = Math.cos(elapsed * 0.08 + grain.phase * 0.7) * 2.4;
+        const shimmer = 0.72 + Math.sin(elapsed * 0.16 + grain.phase) * 0.32;
         const x = grain.x * canvasWidth + driftX;
         const y = grain.y * canvasHeight + driftY;
 
         flowContext.beginPath();
         flowContext.arc(x, y, grain.size, 0, Math.PI * 2);
         flowContext.fillStyle = grain.dark
-          ? `rgba(20,34,36,${(grain.alpha * shimmer * 0.82).toFixed(3)})`
-          : `rgba(${grainColor},${(grain.alpha * shimmer).toFixed(3)})`;
+          ? `rgba(20,34,36,${(grain.alpha * shimmer * 1.08).toFixed(3)})`
+          : `rgba(${grainColor},${(grain.alpha * shimmer * 1.42).toFixed(3)})`;
         flowContext.fill();
       });
     };

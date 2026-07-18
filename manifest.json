@@ -1,16 +1,8 @@
 {
-  "name": "RauhaTap",
-  "short_name": "RauhaTap",
+  "name": "Valwen",
+  "short_name": "Valwen",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#143447",
-  "theme_color": "#143447",
-  "icons": [
-    {
-      "src": "rauhatap-circle-three-waves-small-cutout.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    }
-  ]
+  "theme_color": "#143447"
 }
