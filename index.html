@@ -31,9 +31,9 @@
       background-color: #203b42;
       background:
         url("data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.28' numOctaves='4' seed='43' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23grain)' opacity='0.34'/%3E%3C/svg%3E"),
-        radial-gradient(ellipse at 50% 112%, rgba(190,221,207,0.32), rgba(118,170,163,0.22) 34%, rgba(82,113,125,0.18) 58%, transparent 84%),
+        radial-gradient(ellipse at 50% 108%, rgba(32,59,66,0), rgba(32,59,66,0.18) 46%, #203b42 92%),
         radial-gradient(ellipse at 50% 46%, rgba(190,221,207,0.46), rgba(118,170,163,0.3) 36%, rgba(82,113,125,0.2) 64%, transparent 88%),
-        linear-gradient(145deg, #243947 0%, #5b7876 48%, #9ea990 100%);
+        linear-gradient(180deg, #243947 0%, #5b7876 48%, #4a6c70 74%, #203b42 100%);
       background-size: 180px 180px, 150% 92%, 150% 132%, 100% 100%;
       background-position: center, center bottom, center, center;
     }
@@ -57,18 +57,18 @@
       background-color: #365e64;
       background:
         url("data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.28' numOctaves='4' seed='43' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23grain)' opacity='0.28'/%3E%3C/svg%3E"),
-        radial-gradient(ellipse at 50% 112%, rgba(247,255,251,0.18), rgba(184,225,214,0.16) 34%, rgba(92,137,148,0.14) 58%, transparent 84%),
+        radial-gradient(ellipse at 50% 108%, rgba(54,94,100,0), rgba(54,94,100,0.18) 46%, #365e64 92%),
         radial-gradient(ellipse at 50% 46%, rgba(247,255,251,0.24), rgba(184,225,214,0.2) 36%, rgba(92,137,148,0.18) 66%, transparent 88%),
-        linear-gradient(145deg, #54787e 0%, #7fa095 52%, #aebcae 100%);
+        linear-gradient(180deg, #54787e 0%, #7fa095 50%, #6d8f8a 75%, #365e64 100%);
     }
 
     html[data-theme="night"] {
       background-color: #172f3a;
       background:
         url("data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.28' numOctaves='4' seed='43' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23grain)' opacity='0.36'/%3E%3C/svg%3E"),
-        radial-gradient(ellipse at 50% 112%, rgba(159,218,202,0.3), rgba(75,137,143,0.24) 34%, rgba(28,64,77,0.18) 58%, transparent 84%),
+        radial-gradient(ellipse at 50% 108%, rgba(23,47,58,0), rgba(23,47,58,0.22) 46%, #172f3a 92%),
         radial-gradient(ellipse at 50% 46%, rgba(159,218,202,0.4), rgba(75,137,143,0.32) 36%, rgba(28,64,77,0.2) 66%, transparent 88%),
-        linear-gradient(145deg, #162a36 0%, #395f66 48%, #6f887c 100%);
+        linear-gradient(180deg, #162a36 0%, #395f66 50%, #2b5360 76%, #172f3a 100%);
     }
 
     html,
@@ -94,9 +94,9 @@
       background: inherit;
       background-color: #203b42;
       --shell-color: #203b42;
-      --theme-base: linear-gradient(145deg, #243947 0%, #5b7876 48%, #9ea990 100%);
+      --theme-base: linear-gradient(180deg, #243947 0%, #5b7876 48%, #4a6c70 74%, #203b42 100%);
       --theme-center: radial-gradient(circle at 50% 50%, rgba(190,221,207,0.5), rgba(118,170,163,0.32) 34%, rgba(82,113,125,0.16) 58%, transparent 76%);
-      --theme-floor: radial-gradient(ellipse at 50% 108%, rgba(190,221,207,0.32), rgba(118,170,163,0.22) 34%, rgba(82,113,125,0.18) 58%, transparent 84%);
+      --theme-floor: radial-gradient(ellipse at 50% 108%, rgba(32,59,66,0), rgba(32,59,66,0.18) 46%, #203b42 92%);
       --theme-glow: radial-gradient(circle at 50% 52%, rgba(230,239,213,0.16), transparent 43%);
       --theme-vignette: radial-gradient(circle at center, transparent 31%, rgba(37,63,73,0.26) 62%, rgba(15,28,36,0.52) 100%);
       --grain-opacity: 0.26;
@@ -171,9 +171,9 @@
 
     body[data-theme="day"] {
       --shell-color: #365e64;
-      --theme-base: linear-gradient(145deg, #54787e 0%, #7fa095 52%, #aebcae 100%);
+      --theme-base: linear-gradient(180deg, #54787e 0%, #7fa095 50%, #6d8f8a 75%, #365e64 100%);
       --theme-center: radial-gradient(circle at 50% 50%, rgba(247,255,251,0.25), rgba(184,225,214,0.2) 34%, rgba(92,137,148,0.15) 61%, transparent 80%);
-      --theme-floor: radial-gradient(ellipse at 50% 108%, rgba(247,255,251,0.18), rgba(184,225,214,0.16) 34%, rgba(92,137,148,0.14) 58%, transparent 84%);
+      --theme-floor: radial-gradient(ellipse at 50% 108%, rgba(54,94,100,0), rgba(54,94,100,0.18) 46%, #365e64 92%);
       --theme-glow: radial-gradient(circle at 50% 52%, rgba(255,255,250,0.105), transparent 46%);
       --theme-vignette: radial-gradient(circle at center, transparent 28%, rgba(54,91,101,0.34) 64%, rgba(25,54,66,0.62) 100%);
       --grain-opacity: 0.23;
@@ -181,9 +181,9 @@
 
     body[data-theme="night"] {
       --shell-color: #172f3a;
-      --theme-base: linear-gradient(145deg, #162a36 0%, #395f66 48%, #6f887c 100%);
+      --theme-base: linear-gradient(180deg, #162a36 0%, #395f66 50%, #2b5360 76%, #172f3a 100%);
       --theme-center: radial-gradient(circle at 50% 50%, rgba(159,218,202,0.42), rgba(75,137,143,0.34) 35%, rgba(28,64,77,0.18) 60%, transparent 78%);
-      --theme-floor: radial-gradient(ellipse at 50% 108%, rgba(159,218,202,0.3), rgba(75,137,143,0.24) 34%, rgba(28,64,77,0.18) 58%, transparent 84%);
+      --theme-floor: radial-gradient(ellipse at 50% 108%, rgba(23,47,58,0), rgba(23,47,58,0.22) 46%, #172f3a 92%);
       --theme-glow: radial-gradient(circle at 50% 52%, rgba(182,229,213,0.16), transparent 43%);
       --theme-vignette: radial-gradient(circle at center, transparent 30%, rgba(12,38,50,0.32) 62%, rgba(4,15,23,0.62) 100%);
       --grain-opacity: 0.3;
@@ -249,7 +249,6 @@
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
-      transform-origin: center center;
     }
 
     .cardFilmGlow {
@@ -1207,8 +1206,8 @@ body.pulse .ambient3 {
       .app {
         padding-left: 18px;
         padding-right: 18px;
-        padding-bottom: calc(env(safe-area-inset-bottom) + 12px);
-        transform: translateY(clamp(38px, 7.8dvh, 72px)) scale(1.035);
+        padding-bottom: calc(env(safe-area-inset-bottom) + 38px);
+        transform: translateY(clamp(24px, 5.5dvh, 48px));
       }
 
       .card {
