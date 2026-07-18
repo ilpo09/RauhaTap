@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#17364a">
+  <meta name="theme-color" content="#263f47">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Valwen">
@@ -12,16 +12,25 @@
   <title>Valwen</title>
 
   <style>
+    html {
+      height: 100%;
+      min-height: 100%;
+      background: #263f47;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
+      height: 100%;
       min-height: 100%;
       overflow: hidden;
-      background: #17364a;
+      background-color: #263f47;
     }
 
     body {
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
       min-height: 100dvh;
       font-family: Inter, "SF Pro Display", "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
@@ -39,13 +48,6 @@
       --ring-scale: 1;
       --ring-x: 50%;
       --ring-y: 50%;
-      background:
-        var(--theme-glow),
-        var(--theme-center),
-        var(--theme-base);
-      background-position: center;
-      background-size: 140% 140%, 100% 100%, 100% 100%;
-      animation: calmBackground 90s ease-in-out infinite alternate;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -55,7 +57,22 @@
     body::before {
       content: "";
       position: fixed;
-      inset: 0;
+      inset: -80px 0;
+      pointer-events: none;
+      background:
+        var(--theme-glow),
+        var(--theme-center),
+        var(--theme-base);
+      background-position: center;
+      background-size: 140% 140%, 100% 100%, 100% 100%;
+      animation: calmBackground 90s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -80px 0;
       pointer-events: none;
       background:
         url("data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.28' numOctaves='4' seed='43' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23grain)' opacity='0.96'/%3E%3C/svg%3E"),
@@ -78,10 +95,10 @@
       z-index: 1;
     }
 
-    body::after {
+    .pageVignette {
       content: "";
       position: fixed;
-      inset: 0;
+      inset: -80px 0;
       pointer-events: none;
       background:
         radial-gradient(circle at 82% 78%, rgba(255,236,204,0.1), transparent 30%),
@@ -1081,7 +1098,7 @@ body.pulse .ambient3 {
         --grain-opacity: 0.3;
       }
 
-      body::after {
+      .pageVignette {
         background:
           radial-gradient(circle at 82% 78%, rgba(255,236,204,0.08), transparent 30%),
           var(--theme-vignette);
@@ -1119,6 +1136,7 @@ body.pulse .ambient3 {
         width: min(91vw, 480px);
         padding-left: 18px;
         padding-right: 18px;
+        transform: translateY(clamp(14px, 3.2dvh, 30px));
       }
 
       .card {
@@ -1148,6 +1166,7 @@ body.pulse .ambient3 {
 
 <body>
   <canvas id="flowCanvas" class="flowCanvas" aria-hidden="true"></canvas>
+  <div class="pageVignette" aria-hidden="true"></div>
   <div class="ambient ambient1"></div>
   <div class="ambient ambient2"></div>
   <div class="ambient ambient3"></div>
@@ -1253,6 +1272,11 @@ body.pulse .ambient3 {
       theme: "valwen-theme",
       legacyTheme: "rauhatap-theme"
     };
+    const themeColors = {
+      day: "#5f7f83",
+      night: "#263f47"
+    };
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
 
     const loadSavedMessages = () => {
       try {
@@ -1309,6 +1333,9 @@ body.pulse .ambient3 {
     const setTheme = (theme) => {
       document.body.dataset.theme = theme;
       localStorage.setItem(storageKeys.theme, theme);
+      if (themeMeta) {
+        themeMeta.setAttribute("content", themeColors[theme] || themeColors.night);
+      }
       dayThemeButton.classList.toggle("active", theme === "day");
       nightThemeButton.classList.toggle("active", theme === "night");
       dayThemeButton.setAttribute("aria-pressed", String(theme === "day"));
