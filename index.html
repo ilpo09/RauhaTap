@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#223d43">
+  <meta name="theme-color" content="#203b42">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Valwen">
@@ -15,7 +15,7 @@
     html {
       height: 100%;
       min-height: 100%;
-      background: #223d43;
+      background: #203b42;
     }
 
     html, body {
@@ -25,7 +25,7 @@
       height: 100%;
       min-height: 100%;
       overflow: hidden;
-      background-color: #223d43;
+      background-color: #203b42;
     }
 
     body {
@@ -38,6 +38,7 @@
       -webkit-font-smoothing: antialiased;
       text-rendering: geometricPrecision;
       color: white;
+      --shell-color: #203b42;
       --theme-base: linear-gradient(145deg, #243947 0%, #5b7876 48%, #9ea990 100%);
       --theme-center: radial-gradient(circle at 50% 50%, rgba(190,221,207,0.5), rgba(118,170,163,0.32) 34%, rgba(82,113,125,0.16) 58%, transparent 76%);
       --theme-glow: radial-gradient(circle at 50% 52%, rgba(230,239,213,0.16), transparent 43%);
@@ -59,7 +60,7 @@
     body::before {
       content: "";
       position: fixed;
-      inset: -80px 0;
+      inset: -140px 0 -240px;
       pointer-events: none;
       background:
         var(--theme-glow),
@@ -74,7 +75,7 @@
     body::after {
       content: "";
       position: fixed;
-      inset: -80px 0;
+      inset: -140px 0 -240px;
       pointer-events: none;
       background:
         url("data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.28' numOctaves='4' seed='43' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23grain)' opacity='0.96'/%3E%3C/svg%3E"),
@@ -88,9 +89,12 @@
 
     .flowCanvas {
       position: fixed;
-      inset: -120px 0;
+      top: -160px;
+      right: 0;
+      bottom: -260px;
+      left: 0;
       width: 100vw;
-      height: calc(100% + 240px);
+      height: calc(100% + 420px);
       pointer-events: none;
       opacity: 0.92;
       mix-blend-mode: screen;
@@ -100,7 +104,7 @@
     .pageVignette {
       content: "";
       position: fixed;
-      inset: -80px 0;
+      inset: -140px 0 -240px;
       pointer-events: none;
       background:
         radial-gradient(circle at 82% 78%, rgba(255,236,204,0.1), transparent 30%),
@@ -108,7 +112,21 @@
       z-index: 1;
     }
 
+    .safeAreaWash {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: -210px;
+      height: 390px;
+      pointer-events: none;
+      z-index: 1;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(190,221,207,0.16), transparent 52%),
+        linear-gradient(180deg, rgba(32,59,66,0), rgba(32,59,66,0.48) 32%, var(--shell-color) 88%);
+    }
+
     body[data-theme="day"] {
+      --shell-color: #365e64;
       --theme-base: linear-gradient(145deg, #54787e 0%, #7fa095 52%, #aebcae 100%);
       --theme-center: radial-gradient(circle at 50% 50%, rgba(247,255,251,0.25), rgba(184,225,214,0.2) 34%, rgba(92,137,148,0.15) 61%, transparent 80%);
       --theme-glow: radial-gradient(circle at 50% 52%, rgba(255,255,250,0.105), transparent 46%);
@@ -117,6 +135,7 @@
     }
 
     body[data-theme="night"] {
+      --shell-color: #172f3a;
       --theme-base: linear-gradient(145deg, #162a36 0%, #395f66 48%, #6f887c 100%);
       --theme-center: radial-gradient(circle at 50% 50%, rgba(159,218,202,0.42), rgba(75,137,143,0.34) 35%, rgba(28,64,77,0.18) 60%, transparent 78%);
       --theme-glow: radial-gradient(circle at 50% 52%, rgba(182,229,213,0.16), transparent 43%);
@@ -298,8 +317,9 @@
       text-align: center;
       font-variation-settings: "wght" 610;
       transition:
-        opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+        opacity 0.54s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.54s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.54s cubic-bezier(0.22, 1, 0.36, 1);
       text-wrap: balance;
       text-shadow:
         0 2px 22px rgba(0,0,0,0.18),
@@ -316,12 +336,14 @@
 
     .fadeOut {
       opacity: 0 !important;
-      transform: translateY(7px) scale(0.996);
+      transform: translateY(12px) scale(0.992);
+      filter: blur(0.55px);
     }
 
     .fadeIn {
       opacity: 1 !important;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
+      filter: blur(0);
     }
 
     .arrowButton {
@@ -1137,7 +1159,7 @@ body.pulse .ambient3 {
         padding-left: 18px;
         padding-right: 18px;
         padding-bottom: calc(env(safe-area-inset-bottom) + 38px);
-        transform: translateY(clamp(34px, 7dvh, 62px));
+        transform: translateY(clamp(24px, 5.5dvh, 48px));
       }
 
       .card {
@@ -1168,6 +1190,7 @@ body.pulse .ambient3 {
 <body>
   <canvas id="flowCanvas" class="flowCanvas" aria-hidden="true"></canvas>
   <div class="pageVignette" aria-hidden="true"></div>
+  <div class="safeAreaWash" aria-hidden="true"></div>
   <div class="ambient ambient1"></div>
   <div class="ambient ambient2"></div>
   <div class="ambient ambient3"></div>
@@ -1477,13 +1500,13 @@ body.pulse .ambient3 {
         requestAnimationFrame(() => {
           message.classList.add("fadeIn");
         });
-      }, 190);
+      }, 280);
 
       setTimeout(() => {
         isTransitioning = false;
         button.disabled = false;
         prevButton.disabled = false;
-      }, 540);
+      }, 760);
     };
 
     button.addEventListener("click", () => {
@@ -1532,6 +1555,8 @@ body.pulse .ambient3 {
     const pointerCurrent = { x: 0, y: 0 };
     let sandReturnTimer;
     const sandStartedAt = performance.now();
+    const canvasBleedTop = 160;
+    const canvasBleedBottom = 260;
     let canvasWidth = 0;
     let canvasHeight = 0;
     let canvasScale = 1;
@@ -1559,7 +1584,7 @@ body.pulse .ambient3 {
     const resizeFlowCanvas = () => {
       canvasScale = Math.min(window.devicePixelRatio || 1, 1.5);
       canvasWidth = window.innerWidth;
-      canvasHeight = window.innerHeight + 240;
+      canvasHeight = window.innerHeight + canvasBleedTop + canvasBleedBottom;
       flowCanvas.width = Math.round(canvasWidth * canvasScale);
       flowCanvas.height = Math.round(canvasHeight * canvasScale);
       flowContext.setTransform(canvasScale, 0, 0, canvasScale, 0, 0);
@@ -1588,7 +1613,8 @@ body.pulse .ambient3 {
       const minSide = Math.min(canvasWidth, canvasHeight);
       const maxRadius = Math.max(canvasWidth, canvasHeight) * 0.58;
       const centerX = canvasWidth * 0.5 + pointerCurrent.x * 11;
-      const centerY = canvasHeight * 0.5 - 8 + pointerCurrent.y * 9;
+      const visualCenterY = window.innerHeight * (canvasWidth <= 520 ? 0.43 : 0.5);
+      const centerY = canvasBleedTop + visualCenterY + pointerCurrent.y * 9;
       const isNight = document.body.dataset.theme === "night";
       const ringColor = isNight ? "190,242,226" : "232,249,244";
       const grainColor = isNight ? "174,237,220" : "232,250,244";
