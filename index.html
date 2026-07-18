@@ -400,9 +400,8 @@
       text-align: center;
       font-variation-settings: "wght" 610;
       transition:
-        opacity 0.54s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.54s cubic-bezier(0.22, 1, 0.36, 1),
-        filter 0.54s cubic-bezier(0.22, 1, 0.36, 1);
+        opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
       text-wrap: balance;
       text-shadow:
         0 2px 22px rgba(0,0,0,0.18),
@@ -419,14 +418,12 @@
 
     .fadeOut {
       opacity: 0 !important;
-      transform: translateY(12px) scale(0.992);
-      filter: blur(0.55px);
+      transform: translateY(8px) scale(0.996);
     }
 
     .fadeIn {
       opacity: 1 !important;
       transform: translateY(0) scale(1);
-      filter: blur(0);
     }
 
     .arrowButton {
@@ -441,8 +438,6 @@
         radial-gradient(circle at 50% 58%, rgba(146,238,224,0.16), transparent 62%),
         rgba(255,255,255,0.12);
       color: white;
-      font-size: 2.28rem;
-      font-weight: 300;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -463,6 +458,46 @@
       animation: floatArrow 5s ease-in-out infinite alternate;
     }
 
+    .arrowIcon {
+      position: relative;
+      display: block;
+      width: 31px;
+      height: 24px;
+      color: currentColor;
+    }
+
+    .arrowIcon::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 2px;
+      width: 27px;
+      height: 3px;
+      border-radius: 999px;
+      background: currentColor;
+      transform: translateY(-50%);
+    }
+
+    .arrowIcon::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 2px;
+      width: 12px;
+      height: 12px;
+      border-top: 3px solid currentColor;
+      border-right: 3px solid currentColor;
+      border-radius: 1px;
+      transform: translateY(-50%) rotate(45deg);
+      transform-origin: center;
+    }
+
+    .arrowIcon.left::after {
+      right: auto;
+      left: 2px;
+      transform: translateY(-50%) rotate(225deg);
+    }
+
     .navControls {
       display: grid;
       grid-template-columns: 50px 84px 50px;
@@ -476,7 +511,6 @@
     .prevButton {
       width: 50px;
       height: 50px;
-      font-size: 1.38rem;
       border-color: rgba(255,255,255,0.12);
       background:
         radial-gradient(circle at 50% 24%, rgba(255,255,255,0.12), transparent 38%),
@@ -487,6 +521,25 @@
         inset 0 1px 1px rgba(255,255,255,0.1),
         inset 0 -12px 24px rgba(22,75,88,0.06);
       animation: none;
+    }
+
+    .prevButton .arrowIcon {
+      width: 24px;
+      height: 20px;
+    }
+
+    .prevButton .arrowIcon::before {
+      left: 3px;
+      width: 18px;
+      height: 2.4px;
+    }
+
+    .prevButton .arrowIcon::after {
+      left: 3px;
+      width: 9px;
+      height: 9px;
+      border-top-width: 2.4px;
+      border-right-width: 2.4px;
     }
 
     .prevButton:active {
@@ -571,6 +624,21 @@
       width: 18px;
       background: rgba(255,255,255,0.82);
       box-shadow: 0 0 18px rgba(210,255,246,0.22);
+    }
+
+    body.finalCard .progressDot.active {
+      background: rgba(222,255,246,0.9);
+      box-shadow:
+        0 0 18px rgba(205,255,238,0.2),
+        0 0 34px rgba(180,238,218,0.14);
+    }
+
+    body.finalCard #nextButton {
+      border-color: rgba(226,255,249,0.42);
+      background:
+        radial-gradient(circle at 50% 22%, rgba(255,255,255,0.42), transparent 34%),
+        radial-gradient(circle at 50% 58%, rgba(176,246,224,0.18), transparent 62%),
+        rgba(255,255,255,0.13);
     }
 
     .infoOverlay {
@@ -1237,6 +1305,81 @@ body.pulse .ambient3 {
       }
     }
 
+    @media (max-width: 760px), (pointer: coarse) {
+      body::before {
+        inset: -120px 0 -260px;
+        background-size: 118% 118%, 100% 100%, 120% 86%, 100% 100%;
+        animation: none;
+      }
+
+      body::after {
+        inset: -120px 0 -260px;
+        opacity: 0.28;
+        mix-blend-mode: normal;
+        animation: none;
+      }
+
+      .flowCanvas {
+        top: -120px;
+        bottom: -260px;
+        height: calc(100% + 380px);
+        opacity: 0.64;
+        mix-blend-mode: normal;
+      }
+
+      .pageVignette {
+        inset: -120px 0 -260px;
+      }
+
+      .edgeFadeTop {
+        height: calc(env(safe-area-inset-top) + 126px);
+        min-height: 126px;
+      }
+
+      .edgeFadeBottom {
+        height: calc(env(safe-area-inset-bottom) + 158px);
+        min-height: 158px;
+      }
+
+      .ambient {
+        display: none;
+      }
+
+      .menuButton,
+      .infoPanel,
+      .arrowButton {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+
+      .menuButton {
+        box-shadow:
+          0 10px 22px rgba(0,0,0,0.12),
+          inset 0 1px 1px rgba(255,255,255,0.1);
+      }
+
+      .arrowButton {
+        box-shadow:
+          0 14px 28px rgba(0,0,0,0.16),
+          0 0 26px rgba(169,236,226,0.1),
+          inset 0 1px 1px rgba(255,255,255,0.22),
+          inset 0 -14px 24px rgba(22,75,88,0.1);
+        animation: none;
+      }
+
+      .arrowButton::before,
+      .arrowButton::after {
+        animation: none;
+        opacity: 0.52;
+      }
+
+      .prevButton {
+        box-shadow:
+          0 8px 18px rgba(0,0,0,0.09),
+          inset 0 1px 1px rgba(255,255,255,0.08);
+      }
+    }
+
     @media (max-width: 420px) {
       .app {
         padding-left: 18px;
@@ -1332,8 +1475,12 @@ body.pulse .ambient3 {
     </section>
 
     <div class="navControls" aria-label="Korttien selaus">
-      <button id="prevButton" class="arrowButton prevButton" aria-label="Edellinen teksti">←</button>
-      <button id="nextButton" class="arrowButton" aria-label="Seuraava teksti">→</button>
+      <button id="prevButton" class="arrowButton prevButton" aria-label="Edellinen teksti">
+        <span class="arrowIcon left" aria-hidden="true"></span>
+      </button>
+      <button id="nextButton" class="arrowButton" aria-label="Seuraava teksti">
+        <span class="arrowIcon" aria-hidden="true"></span>
+      </button>
       <span class="controlSpacer" aria-hidden="true"></span>
     </div>
     <div id="progressDots" class="progressDots" aria-hidden="true"></div>
@@ -1465,6 +1612,7 @@ body.pulse .ambient3 {
         dot.className = dotIndex === index ? "progressDot active" : "progressDot";
         dotsContainer.appendChild(dot);
       });
+      document.body.classList.toggle("finalCard", index === messages.length - 1);
     };
 
     updateProgress();
@@ -1600,28 +1748,28 @@ body.pulse .ambient3 {
         requestAnimationFrame(() => {
           message.classList.add("fadeIn");
         });
-      }, 280);
+      }, 170);
 
       setTimeout(() => {
         isTransitioning = false;
         button.disabled = false;
         prevButton.disabled = false;
-      }, 760);
+      }, 440);
     };
 
     button.addEventListener("click", () => {
-      document.body.classList.remove("pulse");
-      button.classList.remove("ripple");
-
-      void document.body.offsetWidth;
-
-      document.body.classList.add("pulse");
-      button.classList.add("ripple");
-
-      setTimeout(() => {
+      if (!prefersLeanMotion) {
         document.body.classList.remove("pulse");
         button.classList.remove("ripple");
-      }, 1800);
+
+        document.body.classList.add("pulse");
+        button.classList.add("ripple");
+
+        setTimeout(() => {
+          document.body.classList.remove("pulse");
+          button.classList.remove("ripple");
+        }, 1800);
+      }
 
       if ("vibrate" in navigator) {
         navigator.vibrate(20);
@@ -1631,15 +1779,15 @@ body.pulse .ambient3 {
     });
 
     prevButton.addEventListener("click", () => {
-      prevButton.classList.remove("ripple");
-
-      void prevButton.offsetWidth;
-
-      prevButton.classList.add("ripple");
-
-      setTimeout(() => {
+      if (!prefersLeanMotion) {
         prevButton.classList.remove("ripple");
-      }, 1100);
+
+        prevButton.classList.add("ripple");
+
+        setTimeout(() => {
+          prevButton.classList.remove("ripple");
+        }, 1100);
+      }
 
       if ("vibrate" in navigator) {
         navigator.vibrate(12);
@@ -1649,6 +1797,7 @@ body.pulse .ambient3 {
     });
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersLeanMotion = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
     const flowCanvas = document.getElementById("flowCanvas");
     const flowContext = flowCanvas.getContext("2d");
     const pointerTarget = { x: 0, y: 0 };
@@ -1660,8 +1809,10 @@ body.pulse .ambient3 {
     let canvasWidth = 0;
     let canvasHeight = 0;
     let canvasScale = 1;
+    let lastSandFrame = 0;
+    const sandFrameInterval = prefersLeanMotion ? 1000 / 30 : 0;
 
-    const particles = Array.from({ length: 3200 }, (_, particleIndex) => ({
+    const particles = Array.from({ length: prefersLeanMotion ? 720 : 3200 }, (_, particleIndex) => ({
       angle: (particleIndex * 2.39996) % (Math.PI * 2),
       ring: particleIndex % 8,
       offset: Math.sin(particleIndex * 12.9898) * 18,
@@ -1672,7 +1823,7 @@ body.pulse .ambient3 {
       bright: particleIndex % 6 === 0
     }));
 
-    const backgroundGrain = Array.from({ length: 9600 }, (_, grainIndex) => ({
+    const backgroundGrain = Array.from({ length: prefersLeanMotion ? 1100 : 9600 }, (_, grainIndex) => ({
       x: ((grainIndex * 0.61803398875) % 1),
       y: ((grainIndex * 0.754877666) % 1),
       size: 0.34 + (grainIndex % 7) * 0.115,
@@ -1682,7 +1833,7 @@ body.pulse .ambient3 {
     }));
 
     const resizeFlowCanvas = () => {
-      canvasScale = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvasScale = prefersLeanMotion ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
       canvasWidth = window.innerWidth;
       canvasHeight = window.innerHeight + canvasBleedTop + canvasBleedBottom;
       flowCanvas.width = Math.round(canvasWidth * canvasScale);
@@ -1733,13 +1884,16 @@ body.pulse .ambient3 {
             [246, 242, 220, 0.08],
             [164, 214, 197, 0.2]
           ];
+      const activeAuraColors = prefersLeanMotion
+        ? auraColors.slice(0, 3).map((color) => [color[0], color[1], color[2], color[3] * 0.72])
+        : auraColors;
 
       flowContext.clearRect(0, 0, canvasWidth, canvasHeight);
       flowContext.lineCap = "round";
       flowContext.save();
-      flowContext.globalCompositeOperation = "lighter";
+      flowContext.globalCompositeOperation = prefersLeanMotion ? "source-over" : "lighter";
 
-      auraColors.forEach((color, colorIndex) => {
+      activeAuraColors.forEach((color, colorIndex) => {
         const phase = elapsed * (0.085 + colorIndex * 0.014) + colorIndex * 1.66;
         const wideSide = Math.max(canvasWidth, canvasHeight);
         const orbitX =
@@ -1752,25 +1906,38 @@ body.pulse .ambient3 {
         const x = centerX + orbitX + pointerCurrent.x * minSide * 0.3;
         const y = centerY + orbitY + pointerCurrent.y * minSide * 0.26;
         const radius = minSide * (0.46 + colorIndex * 0.045) + wobble;
-        const softLayers = [
-          [0, 0, 1.34, 0.92, 0.5],
-          [
-            Math.sin(phase * 1.4) * radius * 0.12,
-            Math.cos(phase * 1.1) * radius * 0.08,
-            1.02,
-            0.72,
-            0.34
-          ],
-          [
-            Math.cos(phase * 0.9) * radius * 0.16,
-            Math.sin(phase * 1.2) * radius * 0.11,
-            0.76,
-            0.58,
-            0.22
-          ]
-        ];
+        const softLayers = prefersLeanMotion
+          ? [
+              [0, 0, 1.2, 0.9, 0.42],
+              [
+                Math.sin(phase * 1.4) * radius * 0.08,
+                Math.cos(phase * 1.1) * radius * 0.06,
+                0.9,
+                0.66,
+                0.24
+              ]
+            ]
+          : [
+              [0, 0, 1.34, 0.92, 0.5],
+              [
+                Math.sin(phase * 1.4) * radius * 0.12,
+                Math.cos(phase * 1.1) * radius * 0.08,
+                1.02,
+                0.72,
+                0.34
+              ],
+              [
+                Math.cos(phase * 0.9) * radius * 0.16,
+                Math.sin(phase * 1.2) * radius * 0.11,
+                0.76,
+                0.58,
+                0.22
+              ]
+            ];
 
-        flowContext.filter = `blur(${Math.max(18, minSide * 0.035).toFixed(1)}px)`;
+        flowContext.filter = prefersLeanMotion
+          ? "none"
+          : `blur(${Math.max(18, minSide * 0.035).toFixed(1)}px)`;
 
         softLayers.forEach((layer, layerIndex) => {
           const layerX = x + layer[0];
@@ -1803,16 +1970,19 @@ body.pulse .ambient3 {
       flowContext.filter = "none";
       flowContext.restore();
 
-      for (let ringIndex = 0; ringIndex < 8; ringIndex += 1) {
-        const progress = ((elapsed * 0.018 + ringIndex / 8) % 1);
+      const ringCount = prefersLeanMotion ? 4 : 8;
+      const ringPoints = prefersLeanMotion ? 48 : 96;
+
+      for (let ringIndex = 0; ringIndex < ringCount; ringIndex += 1) {
+        const progress = ((elapsed * 0.018 + ringIndex / ringCount) % 1);
         const radius = minSide * 0.12 + progress * maxRadius;
         const fade = Math.sin(progress * Math.PI) * 0.012;
         const driftX = Math.sin(elapsed * 0.12 + ringIndex * 1.7) * 4;
         const driftY = Math.cos(elapsed * 0.1 + ringIndex * 1.3) * 3;
 
         flowContext.beginPath();
-        for (let point = 0; point <= 96; point += 1) {
-          const angle = point / 96 * Math.PI * 2;
+        for (let point = 0; point <= ringPoints; point += 1) {
+          const angle = point / ringPoints * Math.PI * 2;
           const ripple =
             Math.sin(angle * 3 + elapsed * 0.17 + ringIndex) * 2.2 +
             Math.sin(angle * 5 - elapsed * 0.11 + ringIndex * 0.7) * 1.2;
@@ -1888,6 +2058,12 @@ body.pulse .ambient3 {
     };
 
     const animateSand = (time) => {
+      if (sandFrameInterval && time - lastSandFrame < sandFrameInterval) {
+        requestAnimationFrame(animateSand);
+        return;
+      }
+
+      lastSandFrame = time;
       const elapsed = (time - sandStartedAt) / 1000;
       const ease = 0.018;
 
