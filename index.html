@@ -109,7 +109,6 @@
       --ring-y: 50%;
       --edge-top-rgb: 32, 59, 66;
       --edge-bottom-rgb: 32, 59, 66;
-      --scroll-tail: 180px;
       letter-spacing: 0;
     }
 
@@ -285,63 +284,6 @@
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
-    }
-
-    .scrollBreathingSpace {
-      display: none;
-      position: relative;
-      height: calc(env(safe-area-inset-bottom) + var(--scroll-tail));
-      margin-top: calc(var(--scroll-tail) * -1);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .scrollBreathingSpace::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(var(--edge-bottom-rgb), 0) 0%,
-        rgba(var(--edge-bottom-rgb), 0.18) 38%,
-        rgba(var(--edge-bottom-rgb), 0.68) 100%
-      );
-    }
-
-    @media (max-width: 760px) {
-      html,
-      body {
-        height: auto;
-        overflow-x: hidden;
-        overflow-y: auto;
-        overscroll-behavior-y: contain;
-      }
-
-      body {
-        position: relative;
-        inset: auto;
-        height: auto;
-        min-height: calc(100svh + var(--scroll-tail));
-        min-height: calc(100dvh + var(--scroll-tail));
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .app {
-        position: sticky;
-        top: 0;
-        height: 100svh;
-        height: 100dvh;
-      }
-
-      .scrollBreathingSpace {
-        display: block;
-        background: transparent;
-      }
-
-      .scrollBreathingSpace::before {
-        display: none;
-      }
     }
 
     .cardFilmGlow {
@@ -1396,7 +1338,6 @@ body.pulse .ambient3 {
     </div>
     <div id="progressDots" class="progressDots" aria-hidden="true"></div>
   </main>
-  <div class="scrollBreathingSpace" aria-hidden="true"></div>
 
   <script>
     const defaultMessages = [
